@@ -28,7 +28,7 @@ const routes = [
         component: Reception,
     },
     {
-        path:'/adminmanage',
+        path:'/admin/manage',
         name:'Adminmanage',
         component:adminmanage,
     }
