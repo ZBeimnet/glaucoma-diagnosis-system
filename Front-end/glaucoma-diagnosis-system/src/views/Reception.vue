@@ -18,11 +18,21 @@
                         <div class="flex mb-4">
                             <div class="w-1/2 mr-1">
                                 <label class="block text-grey-darker text-sm font-bold mb-2" for="first_name">First Name</label>
-                                <input class="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="first_name" type="text" placeholder="Your first name">
+                                <input class="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="first_name" type="text" placeholder="First name">
                             </div>
                             <div class="w-1/2 ml-1">
                                 <label class="block text-grey-darker text-sm font-bold mb-2" for="last_name">Last Name</label>
-                                <input class="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="last_name" type="text" placeholder="Your last name">
+                                <input class="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="last_name" type="text" placeholder="Last name">
+                            </div>
+                        </div>
+                        <div class="flex mb-4">
+                            <div class="w-1/2 mr-1">
+                                <label class="block text-grey-darker text-sm font-bold mb-2" for="age">Age</label>
+                                <input class="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="age" type="text" placeholder="Age">
+                            </div>
+                            <div class="w-1/2 ml-1">
+                                <label class="block text-grey-darker text-sm font-bold mb-2" for="screen_time">Screen Time</label>
+                                <input class="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="screen_time" type="text" placeholder="Average screen time per day">
                             </div>
                         </div>
                         <div class="flex mb-4">
@@ -80,11 +90,11 @@
 
                         <div class="relative text-gray-700">
                             <button class="bg-blue-500 text-white font-bold py-2 px-4 border border-blue-700 rounded">
-                                Add to Queue
+                                Register
                             </button>
                             <label class="text-gray-700 ml-5">
                                 <input type="checkbox" value=""/>
-                                <span class="ml-1">Create new user</span>
+                                <span class="ml-1">Create new patient</span>
                             </label>
                         </div>
                     </div>
