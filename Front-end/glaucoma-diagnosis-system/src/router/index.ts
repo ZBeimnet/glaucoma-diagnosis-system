@@ -5,7 +5,6 @@ import Register from '/src/views/Register.vue'
 import Reception from '/src/views/Reception.vue'
 import Labratory from '/src/views/Labratory.vue'
 import Diagnose from '/src/views/Diagnose.vue'
-
 const routes = [
     {
         path: '/',
@@ -23,6 +22,7 @@ const routes = [
         component: Register,
     },
     {
+
         path: '/reception',
         name: 'Reception',
         component: Reception,
@@ -38,6 +38,7 @@ const routes = [
         component : Diagnose,
     }
 ]
+
 const router = createRouter({
     history: createWebHistory(),
     routes,
