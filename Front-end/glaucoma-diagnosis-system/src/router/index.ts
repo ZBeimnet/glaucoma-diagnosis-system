@@ -28,7 +28,7 @@ const routes = [
     },
     {
         path: '/lab',
-        nam: 'Labratory',
+        name: 'Labratory',
         component: Labratory,
     }
 ]
