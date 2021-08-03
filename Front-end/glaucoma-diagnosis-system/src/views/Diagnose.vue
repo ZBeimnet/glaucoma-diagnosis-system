@@ -81,9 +81,6 @@
                     <button class="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none click:">
                         Patient History
                     </button>
-                    <button class="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">
-                        Files
-                    </button>
                 </nav>
             </div>
           </div>
