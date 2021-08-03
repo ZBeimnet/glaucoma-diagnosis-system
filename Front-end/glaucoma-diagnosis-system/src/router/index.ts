@@ -4,6 +4,7 @@ import Login from '/src/views/Login.vue'
 import Register from '/src/views/Register.vue'
 import Reception from '/src/views/Reception.vue'
 import Labratory from '/src/views/Labratory.vue'
+import Diagnose from '/src/views/Diagnose.vue'
 const routes = [
     {
         path: '/',
@@ -30,6 +31,11 @@ const routes = [
         path: '/lab',
         name: 'Labratory',
         component: Labratory,
+    },
+    {
+        path: '/diagnose',
+        name: 'Diagnose',
+        component : Diagnose,
     }
 ]
 
