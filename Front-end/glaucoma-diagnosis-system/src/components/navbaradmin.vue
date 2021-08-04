@@ -17,7 +17,11 @@
                     <!-- Primary Navbar items -->
                     
 						<div class="flex items-center ml-5 space-x-1">
+
 							<a href="/home" class="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300">Home</a>
+
+						
+
 							<a href="/manage" class="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300">Manage Health center</a>
 							
 						</div>

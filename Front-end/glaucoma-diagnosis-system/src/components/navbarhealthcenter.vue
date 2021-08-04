@@ -16,8 +16,11 @@
                     </div>
                     <!-- Primary Navbar items -->
                     
+
 						<div class=" nav flex items-center ml-5 space-x-1">
 							<a href="/home" class="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300">Home</a>
+
+						
 							<a href="/reception" class="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300">Reception</a>
                             <a href="/diagnose" class="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300">Diagnose</a>
                              <a href="/lab" class="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300">Lab</a>
@@ -55,5 +58,7 @@ export default defineComponent({
 
 
 <style>
+
+
 
 </style>

@@ -8,6 +8,7 @@ import Diagnose from '/src/views/Diagnose.vue'
 
 
 
+
 import AdminDashboard from '/src/views/admin/Dashboard.vue'
 
 
@@ -16,6 +17,7 @@ import AdminDashboard from '/src/views/admin/Dashboard.vue'
 
 
 import adminmanage from '/src/views/adminManage.vue';
+
 
 const routes = [
     {
@@ -28,7 +30,15 @@ const routes = [
         name:'Manage',
         component:adminmanage
     },
+
    
+
+    {
+        path: '/home',
+        name: 'Home',
+        component: Home,
+    },
+
     {
         path: '/register',
         name: 'Register',
