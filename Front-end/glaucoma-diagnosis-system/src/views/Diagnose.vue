@@ -1,4 +1,6 @@
 <template>
+<div>
+    <NavbarHealthCenter/>
   <div class="bg-gray-100">
     <div class="container mx-auto my-5 p-5">
       <div class="md:flex no-wrap md:-mx-2">
@@ -88,14 +90,18 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script lang="ts">
     import { defineComponent, reactive } from "vue";
-    
+    import NavbarHealthCenter from '../components/navbarhealthcenter.vue';    
 
     export default defineComponent({
     name: "Diagnose",
+     components:{
+            NavbarHealthCenter
+        },
     methods :{
         get_result() {
             document.getElementById("result").style.display = 'block'
