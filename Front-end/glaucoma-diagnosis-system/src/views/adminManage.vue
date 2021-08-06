@@ -1,4 +1,7 @@
 <template>
+<div>
+  <NavbarAdmin/>
+  
   <div>
     <div class="flex mt-3 ml-3">
       <ul class="flex border-b">
@@ -107,10 +110,12 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import NavbarAdmin from '../components/navbaradmin.vue';
 const people = [
   {
     name: "Jane Cooper",
@@ -133,6 +138,9 @@ const people = [
 ];
 export default defineComponent({
   name: "adminmanage",
+   components:{
+    NavbarAdmin
+  },
   setup() {
     return {
       people

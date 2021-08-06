@@ -1,4 +1,6 @@
 <template>
+<div>
+    <NavbarHealthCenter/>
     <div class="w-full h-full mt-0 font-sans antialiased bg-grey-lighter content-center">
         <div class="w-5/6 p-4 container mx-auto py-8">
             <table class="border lg:w-1/2 mx-auto bg-white rounded shadow">
@@ -35,10 +37,12 @@
             </table>
         </div>
     </div>
+</div>
 </template>
 
 <script lang="ts">
     import { defineComponent, reactive } from 'vue'
+     import NavbarHealthCenter from '../components/navbarhealthcenter.vue';  
     const patients = [
         {
             card_number : "123",
@@ -52,6 +56,9 @@
     ];
     export default defineComponent ({
         name : "labratory",
+         components:{
+            NavbarHealthCenter
+        },
         methods:{
             file_selector(){
                 console.log('button clicked')
