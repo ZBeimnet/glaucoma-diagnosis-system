@@ -6,10 +6,13 @@ import Reception from '/src/views/Reception.vue'
 import Labratory from '/src/views/Labratory.vue'
 import Diagnose from '/src/views/Diagnose.vue'
 
+
 import AdminDashboard from '/src/views/admin/Dashboard.vue'
 
 
 import adminmanage from '/src/views/adminManage.vue';
+
+
 
 const routes = [
     {
