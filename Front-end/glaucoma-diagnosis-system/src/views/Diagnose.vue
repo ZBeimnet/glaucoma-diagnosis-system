@@ -59,13 +59,17 @@
                 </div>
               </div>
             </div>
-            <div class="inline-flex mt-5">
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" @click="get_result">
+            <div class="inline-flex mt-5 w-1/2">
+                <!-- <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" @click="get_result">
                     Diagnose
-                </button>
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4  ml-5 fas fa-arrow-right" @click="get_next_patient">
+                </button> -->
+                <div class="relative text-gray-700 w-full">
+                    <input class="w-full h-10 pl-3 pr-8 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" placeholder="url"/>
+                    <button class="absolute inset-y-0 right-0 flex items-center px-4 font-bold text-white bg-indigo-600 rounded-r-lg hover:bg-indigo-500 focus:bg-indigo-700" @click="get_result">Dianose</button>
+                </div>
+                <!-- <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4  ml-5 fas fa-arrow-right" @click="get_next_patient">
                     
-                </button>
+                </button> -->
             </div>
           </div>
 
@@ -99,12 +103,12 @@
     methods :{
         get_result() {
             document.getElementById("result").style.display = 'block'
-            document.getElementById("accept").style.display = 'block'
+            // document.getElementById("accept").style.display = 'block'
         },
-        get_next_patient(){
-            document.getElementById("result").style.display = 'None'
-            document.getElementById("accept").style.display = 'None'
-        }
+        // get_next_patient(){
+        //     document.getElementById("result").style.display = 'None'
+        //     document.getElementById("accept").style.display = 'None'
+        // }
     },  
     data() {
         return {
