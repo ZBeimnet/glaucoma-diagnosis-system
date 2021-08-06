@@ -238,7 +238,7 @@ export default defineComponent({
           console.error(error);
         })
         .finally(() => {
-          this.loading = true;
+          this.loading = false;
           document.getElementById("result").style.display = "None";
         });
     },
