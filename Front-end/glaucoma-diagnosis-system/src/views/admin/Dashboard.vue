@@ -1,5 +1,7 @@
 <template>
   <!-- Highlevel stats -->
+  <div>
+    <NavbarAdmin/>
   <section class="text-gray-600 body-font">
     <div class="mx-10 px-10 pt-16 mx-auto">
       <div class="flex flex-wrap -m-4 text-center">
@@ -193,16 +195,19 @@
       <RegionChart />
     </div>
   </div>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import RegionChart from "../../components/RegionChart.vue";
+import NavbarAdmin from '../../components/navbaradmin.vue';
 
 export default defineComponent({
   name: "AdminDashboard",
   components: {
     RegionChart,
+    NavbarAdmin
   },
 });
 </script>

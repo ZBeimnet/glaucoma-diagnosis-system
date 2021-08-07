@@ -6,14 +6,14 @@
              <div class="w-1/4 mr-20 flex mt-5 mb-0 float-right">
                 <div class="relative text-gray-700">
                     <input class="w-full h-10 pl-3 pr-8 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" placeholder="Card Number"/>
-                    <button class="absolute inset-y-0 right-0 flex items-center px-4 font-bold text-white bg-indigo-600 rounded-r-lg hover:bg-indigo-500 focus:bg-indigo-700">Search</button>
+                    <button class="absolute inset-y-0 right-0 flex items-center px-4 font-bold text-white bg-indigo-600 rounded-r-lg hover:bg-blue-500 focus:bg-indigo-700">Search</button>
                 </div>
             </div>
         </div>
         <div class="w-full bg-grey-lightest mt-0 " style="padding-top: 4rem;">
             <div class="container mx-auto py-8">
             <div class="w-5/6 lg:w-1/2 mx-auto bg-white rounded shadow">
-                    <div class="py-4 px-8 text-white text-xl border-b rounded-tl-lg bg-blue-400">
+                    <div class="py-4 px-8 text-white text-xl border-b rounded-tl-lg bg-yellow-400">
                         Patient Registration
                     </div>
                     <div class="py-4 px-8">
@@ -91,7 +91,7 @@
                         </div>
 
                         <div class="relative text-gray-700">
-                            <button class="bg-blue-500 text-white font-bold py-2 px-4 border border-blue-700 rounded">
+                            <button class="bg-indigo-600 rounded-r-lg text-white hover:bg-blue-500 font-bold py-2 px-4 border border-blue-700">
                                 Register
                             </button>
                             <label class="text-gray-700 ml-5">
