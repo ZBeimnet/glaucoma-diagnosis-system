@@ -75,10 +75,10 @@ export default defineComponent({
       e.preventDefault();
       
       if(user.email=='admin'){
-       router.push('Manage');
+       router.push('/admin/dashboard');
       }
       else{
-        router.push('Reception');
+        router.push('dashboard');
       }
       console.log(user);
       user.password='';

@@ -1,5 +1,5 @@
 <template>
-  <NavbarAdmin/>
+  <NavbarHealthCenter />
   <!-- Highlevel stats -->
   <section class="text-gray-600 body-font">
     <div class="mx-10 px-10 pt-16 mx-auto">
@@ -19,7 +19,7 @@
               <circle cx="9" cy="7" r="4"></circle>
               <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
             </svg>
-            <h2 class="title-font font-medium text-3xl text-gray-900">12800</h2>
+            <h2 class="title-font font-medium text-3xl text-gray-900">1800</h2>
             <p class="leading-relaxed">Patient Diagnosed</p>
           </div>
         </div>
@@ -38,7 +38,7 @@
               <circle cx="9" cy="7" r="4"></circle>
               <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
             </svg>
-            <h2 class="title-font font-medium text-3xl text-gray-900">5800</h2>
+            <h2 class="title-font font-medium text-3xl text-gray-900">500</h2>
             <p class="leading-relaxed">Glaucomatous</p>
           </div>
         </div>
@@ -57,7 +57,7 @@
               <circle cx="9" cy="7" r="4"></circle>
               <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
             </svg>
-            <h2 class="title-font font-medium text-3xl text-gray-900">7000</h2>
+            <h2 class="title-font font-medium text-3xl text-gray-900">1300</h2>
             <p class="leading-relaxed">Non-Glaucomatous</p>
           </div>
         </div>
@@ -117,6 +117,7 @@
     <div class="my-5 pl-10">
       <span class="font-medium">Compare </span>
       <select
+			disabled
         class="appearance-none border rounded py-2 px-3 mx-3"
         id="region-one"
         placeholder="Region One"
@@ -163,7 +164,7 @@
           <tr
             class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal"
           >
-            <th class="py-3 px-6 text-left">Region</th>
+            <th class="py-3 px-6 text-left">City</th>
             <th class="py-3 px-6 text-left">Total Diagnosed</th>
             <th class="py-3 px-6 text-center">Glaucomatous</th>
             <th class="py-3 px-6 text-center">Non-Glaucomatous</th>
@@ -199,13 +200,13 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import RegionChart from "../../components/RegionChart.vue";
-import NavbarAdmin from '../../components/navbaradmin.vue';
+import NavbarHealthCenter from '../../components/navbarhealthcenter.vue';
 
 export default defineComponent({
-  name: "AdminDashboard",
+  name: "HCDashboard",
   components: {
     RegionChart,
-    NavbarAdmin
+		NavbarHealthCenter
   },
 });
 </script>

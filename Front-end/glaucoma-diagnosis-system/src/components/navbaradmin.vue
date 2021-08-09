@@ -23,7 +23,7 @@
 						
 
 
-							<router-link to="/manage" class="py-4 px-2 text-gray-500 font-semibold hover:text-blue-500 transition duration-300">Manage Health center</router-link>
+							<router-link to="/admin/manage" class="py-4 px-2 text-gray-500 font-semibold hover:text-blue-500 transition duration-300">Manage Health center</router-link>
 							
 						</div>
                       
