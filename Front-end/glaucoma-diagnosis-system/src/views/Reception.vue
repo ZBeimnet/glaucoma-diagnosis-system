@@ -13,7 +13,7 @@
         <div class="w-full bg-grey-lightest mt-0 " style="padding-top: 4rem;">
             <div class="container mx-auto py-8">
             <div class="w-5/6 lg:w-1/2 mx-auto bg-white rounded shadow">
-                    <div class="py-4 px-8 text-white text-xl border-b rounded-tl-lg bg-yellow-400">
+                    <div class="py-4 px-8 text-white text-xl border-b rounded-tl-lg bg-blue-400">
                         Patient Registration
                     </div>
                     <div class="py-4 px-8">
@@ -91,7 +91,7 @@
                         </div>
 
                         <div class="relative text-gray-700">
-                            <button class="bg-indigo-600 rounded-r-lg text-white hover:bg-blue-500 font-bold py-2 px-4 border border-blue-700">
+                            <button class="bg-indigo-600 text-white hover:bg-blue-500 font-bold py-2 px-4 border border-blue-700">
                                 Register
                             </button>
                             <label class="text-gray-700 ml-5">

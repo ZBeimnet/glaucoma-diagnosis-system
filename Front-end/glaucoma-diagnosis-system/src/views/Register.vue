@@ -4,7 +4,7 @@
         <div class="w-full bg-grey-lightest mt-0 ">
             <div class="container mx-auto py-8">
                 <div class="w-5/6 lg:w-1/2 mx-auto bg-white rounded shadow">
-                    <div class="py-4 my-3 px-8 text-white text-xl border-b rounded-tl-lg bg-yellow-400">
+                    <div class="py-4 my-3 px-8 text-white text-xl border-b rounded-tl-lg bg-blue-400">
                         Health Center Application
                     </div>
                     <div class="mx-4">
@@ -57,7 +57,7 @@
 
                             <div class="flex items-center justify-center mb-5">
                                 <button
-                                    class="w-1/4 ml-10 text-center py-3 rounded-r-lg bg-indigo-600 text-white hover:bg-blue-500 focus:outline-none my-3"
+                                    class="w-1/4 ml-10 text-center py-3 bg-indigo-600 text-white hover:bg-blue-500 focus:outline-none my-3"
                                     type="submit"
                                     @click="onSubmit"
                                 >Apply</button>
