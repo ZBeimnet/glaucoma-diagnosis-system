@@ -164,7 +164,7 @@
           <tr
             class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal"
           >
-            <th class="py-3 px-6 text-left">Region</th>
+            <th class="py-3 px-6 text-left">City</th>
             <th class="py-3 px-6 text-left">Total Diagnosed</th>
             <th class="py-3 px-6 text-center">Glaucomatous</th>
             <th class="py-3 px-6 text-center">Non-Glaucomatous</th>
