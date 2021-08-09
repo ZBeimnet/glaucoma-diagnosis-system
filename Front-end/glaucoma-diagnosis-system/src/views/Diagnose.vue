@@ -125,12 +125,12 @@
                       text-white
                       bg-indigo-600
                       rounded-r-lg
-                      hover:bg-indigo-500
+                      hover:bg-blue-500
                       focus:bg-indigo-700
                     "
                     @click="get_result"
                   >
-                    Dianose
+                    Diagnose
                   </button>
                 </div>
                 <!-- <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4  ml-5 fas fa-arrow-right" @click="get_next_patient">

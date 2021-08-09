@@ -29,7 +29,7 @@
                         <td class="p-2 border-r"> {{ patient.card_number }}</td>
                         <td class="p-2 border-r"> {{ patient.name }}</td>
                         <td>
-                            <input class="bg-blue-500 p-2 text-white hover:shadow-lg text-xs font-thin" type="button" @click="file_selector" value="Attach Image">   
+                            <input class="bg-indigo-600 text-sm text-white hover:bg-blue-500 font-bold py-2 px-4 border border-blue-700" type="button" @click="file_selector" value="Attach Image">   
                             <input type="file" id="my_file">
                         </td>
                     </tr>

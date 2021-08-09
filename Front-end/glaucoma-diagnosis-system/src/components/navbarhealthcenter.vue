@@ -23,11 +23,11 @@
 						
 
 						<div class=" nav flex items-center ml-5 space-x-1">
-							<a href="/home" class="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300">Home</a>
+							<router-link to="/home" class="py-4 px-2 text-gray-500 font-semibold hover:text-blue-500 transition duration-300">Home</router-link>
 
-							<a href="/reception" class="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300">Reception</a>
-                            <a href="/diagnose" class="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300">Diagnose</a>
-                             <a href="/lab" class="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300">Lab</a>
+							<router-link to="/reception" class="py-4 px-2 text-gray-500 font-semibold hover:text-blue-500 transition duration-300">Reception</router-link>
+                            <router-link to="/diagnose" class="py-4 px-2 text-gray-500 font-semibold hover:text-blue-500 transition duration-300">Diagnose</router-link>
+                         <router-link to="/lab" class="py-4 px-2 text-gray-500 font-semibold hover:text-blue-500 transition duration-300">Lab</router-link>
 
 							
 						</div>
@@ -36,11 +36,11 @@
                 <!-- Secondary Navbar items -->
                 <div class="hidden md:flex items-center space-x-3 ">
                    
-                     <a
-                    href="/"
+                     <router-link
+                    to="/"
                     class="py-2 px-2 font-medium text-gray-500 rounded 
-                    hover:bg-green-500 hover:text-white transition duration-300"
-                >Log out</a>
+                    hover:bg-blue-500 hover:text-white transition duration-300"
+                >Log out</router-link>
                 </div>
 
                

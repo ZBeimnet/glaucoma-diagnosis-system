@@ -18,16 +18,16 @@
                 </div>
                 <!-- Secondary Navbar items -->
                 <div class="hidden md:flex items-center space-x-3 ">
-                    <a
-                        href="/register"
+                    <router-link
+                        to="/register"
                         class="py-2 px-2 font-medium text-gray-500 
-                        rounded hover:bg-green-500 hover:text-white transition duration-300"
-                    >Apply</a>
-                     <a
-                    href="/"
+                        rounded hover:bg-blue-500 hover:text-white transition duration-300"
+                    >Apply</router-link>
+                     <router-link
+                    to="/"
                     class="py-2 px-2 font-medium text-gray-500 rounded 
-                    hover:bg-green-500 hover:text-white transition duration-300"
-                >Log In</a>
+                    hover:bg-blue-500 hover:text-white transition duration-300"
+                >Log In</router-link>
                 </div>
 
                
