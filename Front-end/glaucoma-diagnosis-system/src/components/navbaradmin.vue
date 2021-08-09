@@ -18,12 +18,12 @@
 						<div class="flex items-center ml-5 space-x-1">
                             
 
-							<a href="/admin/dashboard" class="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300 ">Dashboard</a>
+							<router-link to="/admin/dashboard" class="py-4 px-2 text-gray-500 font-semibold hover:text-blue-500 transition duration-300 ">Dashboard</router-link>
 
 						
 
 
-							<a href="/manage" class="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300">Manage Health center</a>
+							<router-link to="/manage" class="py-4 px-2 text-gray-500 font-semibold hover:text-blue-500 transition duration-300">Manage Health center</router-link>
 							
 						</div>
                       
@@ -31,11 +31,11 @@
                 <!-- Secondary Navbar items -->
                 <div class="hidden md:flex items-center space-x-3 ">
                    
-                     <a
-                    href="/"
+                     <router-link
+                    to="/"
                     class="py-2 px-2 font-medium text-gray-500 rounded 
-                    hover:bg-green-500 hover:text-white transition duration-300"
-                >Log out</a>
+                    hover:bg-blue-400 hover:text-white transition duration-300"
+                >Log out</router-link>
                 </div>
 
                

@@ -30,7 +30,7 @@
                     <div class="flex items-center justify-center mb-5">
                     <button
                     @click="onSubmit"
-                        class="w-1/4 ml-10 text-center py-3  bg-indigo-600 text-white hover:bg-blue-500 focus:outline-none my-3"
+                        class="w-1/4 ml-10 text-center py-3  bg-indigo-600 text-white hover:bg-blue-500 focus:outline-none ransition duration-300 my-3"
                         type="submit"
                     >Login</button>
                     <div>
