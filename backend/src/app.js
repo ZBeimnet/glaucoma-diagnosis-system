@@ -8,5 +8,5 @@ app.get('/',(req,res)=>{
 })
 
 app.listen(port,()=>{
-    console.log(`GDS is listening at http://localhost:${port}`);
+    console.log(`GDS is listening at http://localhost:${process.env.port || port}`);
 })
