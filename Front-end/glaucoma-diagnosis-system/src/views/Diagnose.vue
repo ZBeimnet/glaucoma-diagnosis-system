@@ -2,10 +2,11 @@
   <div>
     <NavbarHealthCenter />
     <div class="bg-gray-100">
-      <div class="container mx-auto my-5 p-5">
+      <div class="container mx-auto my-5 p-5 ">
         <div class="md:flex no-wrap md:-mx-2">
           <div
             class="
+              flex flex-col justify-center items-center
               border border-blue-300
               shadow
               rounded-md
@@ -15,11 +16,13 @@
               mx-auto
             "
           >
-            <div>
-              <p>{{ this.prediction_result.tagName }}</p>
-              <p>{{ this.prediction_result.probability }}</p>
+            <img v-if="!loading && received_result" :src="image_url" class="rounded-md"/>
+            <div v-if="!loading && received_result" class="text-center" :class="getColor(this.prediction_result.tagName)">
+              <p class="">{{ this.prediction_result.tagName }}</p>
+              <p>Probability: {{ this.prediction_result.probability }}</p>
             </div>
-            <div class="animate-pulse flex space-x-4 hidden" id="result">
+            <Loader :loaderColor="loaderColor" v-if="loading"/>
+            <!-- <div class="animate-pulse flex space-x-4 hidden" id="result">
               <div class="flex-1 space-y-4 py-1">
                 <div class="h-4 bg-blue-400 rounded w-3/4"></div>
                 <div class="space-y-2">
@@ -27,7 +30,7 @@
                   <div class="h-4 bg-blue-400 rounded w-5/6"></div>
                 </div>
               </div>
-            </div>
+            </div> -->
             <div class="flex mt-10 hidden" id="accept">
               <button class="w-1/2">
                 <i class="fa fa-check fa-2x" style="color: green"></i>
@@ -100,6 +103,7 @@
                   <input
                     v-model="image_url"
                     class="
+                      overflow-clip overflow-hidden
                       w-full
                       h-10
                       pl-3
@@ -187,16 +191,20 @@
 import { defineComponent, reactive } from "vue";
 import axios from "axios";
 import NavbarHealthCenter from "../components/navbarhealthcenter.vue";
+import Loader from "../components/Loader.vue";
 
 export default defineComponent({
   name: "Diagnose",
   components: {
     NavbarHealthCenter,
+    Loader
   },
   data() {
     return {
+      loaderColor: "#2196f3",
       loading: false,
       image_url: "",
+      received_result: false,
       prediction_result: {},
       card_number: "112",
       first_name: "John",
@@ -211,9 +219,17 @@ export default defineComponent({
     };
   },
   methods: {
+    getColor(virdict) {
+      if (virdict === "Glaucoma Positive") {
+        return "text-red-600"
+      }
+      if (virdict === "Glaucoma Negative") {
+        return "text-green-600"
+      }
+    },
     get_result() {
-      document.getElementById("result").style.display = "block";
       this.loading = true;
+      this.received_result = false;
       const api =
         "https://southcentralus.api.cognitive.microsoft.com/customvision/v3.0/Prediction/d74c4bc4-30bd-4477-ad1d-f5e30e90600d/classify/iterations/glaucoma/url";
       const headers = {
@@ -239,7 +255,7 @@ export default defineComponent({
         })
         .finally(() => {
           this.loading = false;
-          document.getElementById("result").style.display = "None";
+          this.received_result = true;
         });
     },
     // get_next_patient(){
