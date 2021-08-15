@@ -16,8 +16,8 @@
               mx-auto
             "
           >
-            <img v-if="!loading" :src="image_url" class="rounded-md"/>
-            <div v-if="!loading" class="text-center" :class="getColor(this.prediction_result.tagName)">
+            <img v-if="!loading && received_result" :src="image_url" class="rounded-md"/>
+            <div v-if="!loading && received_result" class="text-center" :class="getColor(this.prediction_result.tagName)">
               <p class="">{{ this.prediction_result.tagName }}</p>
               <p>Probability: {{ this.prediction_result.probability }}</p>
             </div>
@@ -204,6 +204,7 @@ export default defineComponent({
       loaderColor: "#2196f3",
       loading: false,
       image_url: "",
+      received_result: false,
       prediction_result: {},
       card_number: "112",
       first_name: "John",
@@ -228,6 +229,7 @@ export default defineComponent({
     },
     get_result() {
       this.loading = true;
+      this.received_result = false;
       const api =
         "https://southcentralus.api.cognitive.microsoft.com/customvision/v3.0/Prediction/d74c4bc4-30bd-4477-ad1d-f5e30e90600d/classify/iterations/glaucoma/url";
       const headers = {
@@ -253,6 +255,7 @@ export default defineComponent({
         })
         .finally(() => {
           this.loading = false;
+          this.received_result = true;
         });
     },
     // get_next_patient(){
