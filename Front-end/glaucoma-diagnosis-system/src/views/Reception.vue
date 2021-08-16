@@ -1,7 +1,7 @@
 <template>
 <div>
     <NavbarHealthCenter/>
-    <div class="w-full h-full mt-0 font-sans antialiased bg-grey-lighter ">
+    <div class="body w-full h-full mt-0 font-sans antialiased bg-grey-lighter ">
         <div class="CardNumber">
              <div class="w-1/4 mr-20 flex mt-5 mb-0 float-right">
                 <div class="relative text-gray-700">
