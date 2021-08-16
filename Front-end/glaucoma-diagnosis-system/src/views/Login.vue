@@ -2,7 +2,7 @@
 <div>
   <NavbarLogin/>
 
-  <div class="w-full bg-grey-lightest mt-0">
+  <div class="body w-full bg-grey-lightest mt-0">
             <div class="container mx-auto py-8">
             <div class="w-5/6 lg:w-1/2 mx-auto bg-white rounded shadow">
                     <div class="py-4 my-3 px-8 text-white text-xl border-b rounded-tl-lg bg-blue-400">
@@ -88,3 +88,6 @@ export default defineComponent({
 })
    
 </script>
+<style>
+
+</style>

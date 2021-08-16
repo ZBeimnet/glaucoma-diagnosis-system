@@ -1,7 +1,7 @@
 <template>
   <div>
     <NavbarHealthCenter />
-    <div class="bg-gray-100">
+    <div class="body bg-gray-100">
       <div class="container mx-auto my-5 p-5 ">
         <div class="md:flex no-wrap md:-mx-2">
           <div

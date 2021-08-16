@@ -1,6 +1,8 @@
 <template>
+<div>
   <NavbarAdmin/>
   <!-- Highlevel stats -->
+  <div class="body">
   <section class="text-gray-600 body-font">
     <div class="mx-10 px-10 pt-16 mx-auto">
       <div class="flex flex-wrap -m-4 text-center">
@@ -193,6 +195,8 @@
     <div>
       <RegionChart />
     </div>
+  </div>
+  </div>
   </div>
 </template>
 

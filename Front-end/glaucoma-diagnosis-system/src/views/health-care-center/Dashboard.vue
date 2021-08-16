@@ -1,6 +1,8 @@
 <template>
+<div>
   <NavbarHealthCenter />
   <!-- Highlevel stats -->
+  <div class="body">
   <section class="text-gray-600 body-font">
     <div class="mx-10 px-10 pt-16 mx-auto">
       <div class="flex flex-wrap -m-4 text-center">
@@ -173,6 +175,7 @@
         <tbody class="text-gray-600 text-sm font-light">
           <tr
             v-for="_ in 6"
+            
             class="border-b border-gray-200 bg-gray-50 hover:bg-gray-100"
           >
             <td class="py-3 px-6 text-center">
@@ -195,6 +198,8 @@
       <RegionChart />
     </div>
   </div>
+  </div>
+</div>
 </template>
 
 <script lang="ts">
