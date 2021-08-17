@@ -6,11 +6,12 @@ const morgan = require('morgan');
 
 const app = express();
 var port_number = process.env.PORT || 8080;
-const Dburl = "mongodb://localhost:27017/gds";
+const localDburl = "mongodb://localhost:27017/gds";
+const mongodbAtlasUrl = "mongodb+srv://beka:310203@cluster0.jgnvu.mongodb.net/GDS?retryWrites=true&w=majority";
 const patientRouter = require('./routes/patient');
 
 mongoose
-  .connect(Dburl, {
+  .connect(mongodbAtlasUrl, {
     useCreateIndex: true,
     useFindAndModify: true,
     useNewUrlParser: true,
@@ -24,10 +25,10 @@ mongoose
   
   app.use(express.json());
 
-//   app.get('/',(req,res)=>{
-//     res.send("Hello world");
+  app.get('/',(req,res)=>{
+    res.send("Hello world");
     
-// })
+})
 app.use("/patients",patientRouter);
 
 app.listen(port_number,()=>{
