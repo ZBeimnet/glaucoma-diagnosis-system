@@ -27,6 +27,10 @@ const patientSchema = new Schema({
     gender:{
         type:String
     },
+    image:{
+        type:String,
+        default:""
+    }
 
 
 });
