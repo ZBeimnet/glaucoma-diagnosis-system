@@ -5,9 +5,9 @@ const morgan = require('morgan');
 
 
 const app = express();
-var port_number = process.env.PORT || 8080;
+var port_number = process.env.PORT || 9090;
 const localDburl = "mongodb://localhost:27017/gds";
-const mongodbAtlasUrl = "mongodb+srv://beka:310203@cluster0.jgnvu.mongodb.net/GDS?retryWrites=true&w=majority";
+const mongodbAtlasUrl = "mongodb+srv://admin:admin@cluster0.8zxso.mongodb.net/GDS?retryWrites=true&w=majority";
 const patientRouter = require('./routes/patient');
 
 mongoose
@@ -19,6 +19,8 @@ mongoose
   })
   .then(() => {
     console.log("Connected to the database successfuly");
+  }).catch((err)=>{
+    console.log(err);
   });
   app.use(cors());
   app.use(morgan('dev'));
