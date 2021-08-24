@@ -5,11 +5,11 @@ const morgan = require('morgan');
 
 
 const app = express();
-var port_number = process.env.PORT || 9090;
+var port_number = process.env.PORT || 8000;
 const localDburl = "mongodb://localhost:27017/gds";
 const mongodbAtlasUrl = "mongodb+srv://admin:admin@cluster0.8zxso.mongodb.net/GDS?retryWrites=true&w=majority";
 const patientRouter = require('./routes/patient');
-
+const adminRouter = require('./routes/admin');
 mongoose
   .connect(mongodbAtlasUrl, {
     useCreateIndex: true,
@@ -32,6 +32,8 @@ mongoose
     
 })
 app.use("/patients",patientRouter);
+app.use("/admin",adminRouter);
+
 
 app.listen(port_number,()=>{
     console.log(`GDS is listening at http://localhost:${port_number}`);
