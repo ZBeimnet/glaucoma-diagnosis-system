@@ -20,6 +20,10 @@ const helathcenterSchema = new schema({
     },
     medicallicense:{
         type:String
+    },
+    isGranted:{
+        type:Boolean,
+        default:false
     }
 });
 
