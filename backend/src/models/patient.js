@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const Schema = mongoose.Schema;
 
 const patientSchema = new Schema({
@@ -27,10 +26,26 @@ const patientSchema = new Schema({
     gender:{
         type:String
     },
-    image:{
-        type:String,
-        default:""
+    isDiagnosed:{
+        type:Boolean,
+        default:false
+    },
+    patientresult:[ 
+        {
+        date:{
+            type:Date,
+    
+        },
+        glaucomatous:{
+            type:Boolean,
+            default:false
+    
+        },
+        image:{
+            type:String
+        }
     }
+    ]
 
 
 });
