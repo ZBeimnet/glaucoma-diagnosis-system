@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
+let counter = 1;
+let CountedId = {type: Number, default: () => counter++};
 const patientSchema = new Schema({
+    cardNumber:CountedId,
     firstname:{
         type:String,
     },
@@ -36,10 +38,15 @@ const patientSchema = new Schema({
             type:Date,
     
         },
-        glaucomatous:{
-            type:Boolean,
-            default:false
-    
+        result:{
+            type:String,
+           
+        },
+        probablity:{
+            type:Number,
+        },
+        doctorFinalDecision:{
+            type:String,
         },
         image:{
             type:String
