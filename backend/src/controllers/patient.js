@@ -107,7 +107,7 @@ exports.updatePatient = async(req,res,next)=>{
 
 exports.searchPatient = async (req,res,next)=>{
         try{
-            const searchedpatient = await find();
+            const searchedpatient = await patient.findOne({cardNumber:req.body.cardNumber});
             if(searchedpatient){
                 res.status(200).json({
                     status:"sucess",
@@ -121,6 +121,6 @@ exports.searchPatient = async (req,res,next)=>{
             }
         }
         catch(err){
-
+            console.log(err);
         }
 }
