@@ -104,3 +104,23 @@ exports.updatePatient = async(req,res,next)=>{
 
     }
 }
+
+exports.searchPatient = async (req,res,next)=>{
+        try{
+            const searchedpatient = await find();
+            if(searchedpatient){
+                res.status(200).json({
+                    status:"sucess",
+                    searchedpatient
+                })
+            }
+            else{
+                res.status(404).json({
+                    status:"not found"
+                })               
+            }
+        }
+        catch(err){
+
+        }
+}
