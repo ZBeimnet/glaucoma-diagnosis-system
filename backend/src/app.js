@@ -5,7 +5,7 @@ const morgan = require('morgan');
 
 
 const app = express();
-var port_number = process.env.PORT || 3000;
+var port_number = process.env.PORT || 5000;
 const localDburl = "mongodb://localhost:27017/gds";
 const mongodbAtlasUrl = "mongodb+srv://admin:admin@cluster0.8zxso.mongodb.net/GDS?retryWrites=true&w=majority";
 const patientRouter = require('./routes/patient');
