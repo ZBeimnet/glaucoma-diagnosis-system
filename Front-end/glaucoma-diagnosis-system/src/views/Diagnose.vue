@@ -16,10 +16,10 @@
               mx-auto
             "
           >
-            <img v-if="!loading && received_result" :src="image_url" class="rounded-md"/>
-            <div v-if="!loading && received_result" class="text-center" :class="getColor(this.prediction_result.tagName)">
-              <p class="">{{ this.prediction_result.tagName }}</p>
-              <p>Probability: {{ this.prediction_result.probability }}</p>
+            <img v-if="!loading" :src="image_url" class="rounded-md"/>
+            <div v-if="!loading && Object.keys(prediction_result).length !== 0" class="text-center" :class="getColor(prediction_result.tagName)">
+              <p class="">{{ prediction_result.tagName }}</p>
+              <p>Probability: {{ prediction_result.probability }}</p>
             </div>
             <Loader :loaderColor="loaderColor" v-if="loading"/>
             <!-- <div class="animate-pulse flex space-x-4 hidden" id="result">
@@ -132,7 +132,7 @@
                       hover:bg-blue-500
                       focus:bg-indigo-700
                     "
-                    @click="get_result"
+                    @click="getResult"
                   >
                     Diagnose
                   </button>
@@ -189,79 +189,77 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
-import axios from "axios";
+import { computed, ref } from 'vue';
+import { useStore } from "vuex";
 import NavbarHealthCenter from "../components/navbarhealthcenter.vue";
 import Loader from "../components/Loader.vue";
+import func from "../../vue-temp/vue-editor-bridge";
 
-export default defineComponent({
+export default({
   name: "Diagnose",
   components: {
     NavbarHealthCenter,
     Loader
   },
-  data() {
-    return {
-      loaderColor: "#2196f3",
-      loading: false,
-      image_url: "",
-      received_result: false,
-      prediction_result: {},
-      card_number: "112",
-      first_name: "John",
-      last_name: "Doe",
-      age: 42,
-      gender: "M",
-      computer_usage: 4,
-      image: "file://dir",
-      region: "Addis Ababa",
-      sub_city: "Gullele",
-      phone_number: "0922",
-    };
-  },
-  methods: {
-    getColor(virdict) {
+  setup() {
+    const loaderColor = "#2196f3";
+    const image_url = ref("");
+    const card_number = "112";
+    const first_name = "John";
+    const last_name = "Doe";
+    const age = 42;
+    const gender = "M"
+    const computer_usage = 4;
+    const image = "file://dir";
+    const region = "Addis Ababa";
+    const sub_city = "Gullele";
+    const phone_number = "0922";
+
+    const store = useStore();
+
+    const prediction_result = computed(function () {
+      return store.state.predictionResult;
+    });
+
+    const loading = computed(function () {
+      return store.state.predictionLoader;
+    })
+
+    function getResult() {
+      store.dispatch('fetchPredictionResult', image_url.value);
+    }
+
+    function getColor(virdict) {
       if (virdict === "Glaucoma Positive") {
         return "text-red-600"
       }
       if (virdict === "Glaucoma Negative") {
         return "text-green-600"
       }
-    },
-    get_result() {
-      this.loading = true;
-      this.received_result = false;
-      const api =
-        "https://southcentralus.api.cognitive.microsoft.com/customvision/v3.0/Prediction/d74c4bc4-30bd-4477-ad1d-f5e30e90600d/classify/iterations/glaucoma/url";
-      const headers = {
-        "Content-Type": "application/json",
-        "Prediction-Key": "4d317fce897d495ea95ea0f104e37c1f",
-      };
-      axios
-        .post(
-          api,
-          {
-            Url: this.image_url,
-          },
-          {
-            headers: headers,
-          }
-        )
-        .then((response) => {
-          this.prediction_result = response.data.predictions[0];
-          console.log(this.prediction_result);
-        })
-        .catch((error) => {
-          console.error(error);
-        })
-        .finally(() => {
-          this.loading = false;
-          this.received_result = true;
-        });
-    },
-    // get_next_patient(){
-    //     document.getElementById("result").style.display = 'None'
-    //     document.getElementById("accept").style.display = 'None'
-    // }
-  },
+    }
+
+    return {
+      prediction_result,
+      loading,
+      loaderColor,
+      image_url,
+      card_number,
+      first_name,
+      last_name,
+      age,
+      gender,
+      computer_usage,
+      image,
+      region,
+      sub_city,
+      phone_number,
+      getColor,
+      getResult
+    };
+  }
 });
 </script>
+
+<style scoped>
+
+</style>
