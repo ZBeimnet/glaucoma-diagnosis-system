@@ -190,7 +190,7 @@
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
 import { computed, ref } from 'vue';
-import { useStore } from "vuex";
+import { useStore, mapState } from "vuex";
 import NavbarHealthCenter from "../components/navbarhealthcenter.vue";
 import Loader from "../components/Loader.vue";
 import func from "../../vue-temp/vue-editor-bridge";
@@ -216,18 +216,9 @@ export default({
     const phone_number = "0922";
 
     const store = useStore();
-
-    const prediction_result = computed(function () {
-      return store.state.predictionResult;
-    });
-
-    const loading = computed(function () {
-      return store.state.predictionLoader;
-    })
-
-    function getResult() {
-      store.dispatch('fetchPredictionResult', image_url.value);
-    }
+    const prediction_result = computed(() => store.state.diagnose.predictionResult);
+    const loading = computed(() => store.state.diagnose.predictionLoader);
+    const getResult = () => store.dispatch('fetchPredictionResult', image_url.value);
 
     function getColor(virdict) {
       if (virdict === "Glaucoma Positive") {
