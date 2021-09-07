@@ -22,9 +22,11 @@ exports.uploadImage = upload.single("image");
 exports.createPatient = async (req,res,next)=>{
     try{
         
-        
+        const patientsByhealthcentercount = await patient.find({healthcenter:req.body.healthcenter}).count()+1; 
+
         
         const newpatient = await patient.create({
+             cardNumber:patientsByhealthcentercount,
             ...req.body
         });
         res.status(201).json({
@@ -33,13 +35,13 @@ exports.createPatient = async (req,res,next)=>{
         })
     }
     catch(err){
-
+     console.log(err);   
     }
 }
 
 exports.getAllPatients = async (req,res,next)=>{
    try{
-        const allpatients = await patient.find();
+        const allpatients = await patient.find().populate("healthcenter");
         res.status(200).json({
             status:"sucess",
             allpatients
@@ -75,6 +77,27 @@ exports.getPatient = async(req,res,next)=>{
      catch(err){
 
      }
+}
+
+exports.getPatientByHealthcenter = async (req,res,next)=>{
+    try{
+        const patientsByhealthcenter = await patient.find({healthcenter:req.params.id});
+        if(!patientsByhealthcenter){
+            res.status(404).json({
+                status: "error",
+                message: "patients not found",
+              });
+        }
+        else{
+            res.status(200).json({
+                status:"patients in the healthcenter",
+                patientsByhealthcenter
+            });
+        }       
+    }
+    catch(err){
+        console.log(err);
+    }
 }
 
 exports.updatePatient = async(req,res,next)=>{
