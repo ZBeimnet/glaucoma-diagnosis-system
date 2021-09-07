@@ -188,14 +188,8 @@
 </template>
 
 <script lang="ts">
-<<<<<<< HEAD
 import { defineComponent, computed, ref } from "vue";
 import { useStore } from "vuex";
-=======
-import { defineComponent, reactive } from "vue";
-import { computed, ref } from 'vue';
-import { useStore, mapState } from "vuex";
->>>>>>> d0912ba ([web] Modularize store)
 import NavbarHealthCenter from "../components/navbarhealthcenter.vue";
 import Loader from "../components/Loader.vue";
 import func from "../../vue-temp/vue-editor-bridge";
@@ -223,11 +217,7 @@ export default({
     const store = useStore();
     const prediction_result = computed(() => store.state.diagnose.predictionResult);
     const loading = computed(() => store.state.diagnose.predictionLoader);
-<<<<<<< HEAD
     const getResult = () => store.dispatch('diagnose/fetchPredictionResult', image_url.value, {root:true});
-=======
-    const getResult = () => store.dispatch('fetchPredictionResult', image_url.value);
->>>>>>> d0912ba ([web] Modularize store)
 
     function getColor(virdict) {
       if (virdict === "Glaucoma Positive") {
