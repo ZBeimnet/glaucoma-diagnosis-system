@@ -3,7 +3,13 @@ const Schema = mongoose.Schema;
 let counter = 1;
 let CountedId = {type: Number, default: () => counter++};
 const patientSchema = new Schema({
-    cardNumber:CountedId,
+    cardNumber:{
+        type:Number
+    },
+    healthcenter:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"healthcenter"
+    },
     firstname:{
         type:String,
     },
@@ -51,7 +57,8 @@ const patientSchema = new Schema({
         image:{
             type:String
         }
-    }
+    },
+
     ]
 
 
