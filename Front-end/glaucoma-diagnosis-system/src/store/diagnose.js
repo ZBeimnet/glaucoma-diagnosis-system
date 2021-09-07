@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const diagnoseModule = {
+  namespaced: true,
   state: {
     predictionResult: {},
     predictionLoader: false
