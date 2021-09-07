@@ -345,14 +345,14 @@ export default defineComponent({
     const registerPatient = function() {
       store.dispatch('patient/registerPatient', patient.value, {root:true});
       // clear form
-      // patient.value.firstname = '';
-      // patient.value.lastname = '';
-      // patient.value.age = '';
-      // patient.value.region = '';
-      // patient.value.subcity = '';
-      // patient.value.gender = '';
-      // patient.value.phoneno = '';
-      // patient.value.screentime = '';
+      patient.value.firstname = '';
+      patient.value.lastname = '';
+      patient.value.age = '';
+      patient.value.region = '';
+      patient.value.subcity = '';
+      patient.value.gender = '';
+      patient.value.phoneno = '';
+      patient.value.screentime = '';
     }
 
     return {
