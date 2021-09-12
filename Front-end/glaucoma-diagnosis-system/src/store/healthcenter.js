@@ -2,7 +2,7 @@ import axios from "axios";
 
 const api = 'https://aait-glaucoma-diagnosis.herokuapp.com'
 
-const adminModule = {
+const healthcenterModule = {
   namespaced: true,
   state: {
     registerResult: "",
@@ -15,9 +15,8 @@ const adminModule = {
   },
 
   actions: {
-    async registerHealthcenter ({ commit }, healthcenter) {
+    registerHealthcenter: async ({ commit }, healthcenter) => {
       commit("setRegisterLoader", true);
-
       try {
         const response = await axios.post(`${api}/healthcenter`, healthcenter);
         commit("setRegisterResult", "Success");
@@ -33,4 +32,4 @@ const adminModule = {
   }
 };
 
-export default adminModule;
+export default healthcenterModule;

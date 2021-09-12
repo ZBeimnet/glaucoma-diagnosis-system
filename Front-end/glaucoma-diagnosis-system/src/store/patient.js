@@ -20,24 +20,19 @@ const patientModule = {
   },
 
   actions: {
-    registerPatient: ({ commit }, patient) => {
+    registerPatient: async ({ commit }, patient) => {
       commit("setRegisterLoader", true);
-      axios
-        .post(
-          `${api}/patients/all`,
-          patient
-        )
-        .then((response) => {
-          commit("setRegisterResult", "Success");
-          console.log(response);
-        })
-        .catch((error) => {
-          commit("setRegisterResult", "Error");
-          console.error(error);
-        })
-        .finally(() => {
-          commit("setRegisterLoader", false);
-        });
+      try {
+        const response = await axios.post(`${api}/patients`, patient)
+        commit("setRegisterResult", "Success");
+        console.log(response);
+      } catch(error) {
+        commit("setRegisterResult", "Error");
+        console.error(error);
+      } finally {
+        commit("setRegisterLoader", false);
+      }
+       
     },
 
     fetchPatientsByHealthcenter: ({ commit }, healthcenterId) => {

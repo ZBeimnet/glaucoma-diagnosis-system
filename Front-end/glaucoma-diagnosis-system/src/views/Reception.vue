@@ -342,8 +342,8 @@ export default defineComponent({
     const registerResult = computed(() => store.state.patient.registerResult);
     const registerLoader = computed(() => store.state.patient.registerLoader);
     
-    const registerPatient = function() {
-      store.dispatch('patient/registerPatient', patient.value, {root:true});
+    const registerPatient = async function() {
+      await store.dispatch('patient/registerPatient', patient.value, {root:true});
       // clear form
       patient.value.firstname = '';
       patient.value.lastname = '';
