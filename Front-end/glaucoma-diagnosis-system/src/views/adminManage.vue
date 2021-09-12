@@ -23,7 +23,11 @@
         </ul>
       </div>
 
-      <div class="flex flex-col my-5">
+      <div v-if="healthcenterLoading" class="flex flex-col justify-center items-center">
+        <Loader :loaderColor="loaderColor"/>
+      </div>
+
+      <div class="flex flex-col my-5" v-if="!healthcenterLoading">
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div
             class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
@@ -212,7 +216,11 @@
         </ul>
       </div>
 
-      <div class="flex flex-col my-5">
+      <div v-if="healthcenterLoading" class="flex flex-col justify-center items-center">
+        <Loader :loaderColor="loaderColor"/>
+      </div>
+
+      <div class="flex flex-col my-5" v-if="!healthcenterLoading">
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div
             class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
@@ -400,11 +408,13 @@
 import { defineComponent, computed, ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import NavbarAdmin from "../components/navbaradmin.vue";
+import Loader from "../components/Loader.vue";
 
 export default defineComponent({
   name: "adminmanage",
   components: {
     NavbarAdmin,
+    Loader
   },
   setup() {
     const healthcenters = ref({
@@ -415,6 +425,7 @@ export default defineComponent({
     const store = useStore();
 
     const actionLoader = computed(() => store.state.healthcenter.actionLoader);
+    const healthcenterLoading = computed(() => store.state.healthcenter.healthcenterLoader);
 
     onMounted(async () => {
       await store.dispatch("healthcenter/fetchAllHealthcenters", { root: true });
@@ -448,7 +459,9 @@ export default defineComponent({
       healthcenters,
       approve,
       deny,
-      actionLoader
+      actionLoader,
+      healthcenterLoading,
+      loaderColor: "#2196f3"
     };
   },
 });
