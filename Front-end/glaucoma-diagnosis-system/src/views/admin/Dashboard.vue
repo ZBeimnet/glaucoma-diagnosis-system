@@ -21,7 +21,9 @@
               <circle cx="9" cy="7" r="4"></circle>
               <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
             </svg>
-            <h2 class="title-font font-medium text-3xl text-gray-900">12800</h2>
+            <h2 class="title-font font-medium text-3xl text-gray-900"> 
+              {{ highlevelStats.patientsDiagnosed }} 
+            </h2>
             <p class="leading-relaxed">Patient Diagnosed</p>
           </div>
         </div>
@@ -40,7 +42,9 @@
               <circle cx="9" cy="7" r="4"></circle>
               <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
             </svg>
-            <h2 class="title-font font-medium text-3xl text-gray-900">5800</h2>
+            <h2 class="title-font font-medium text-3xl text-gray-900">
+              {{ highlevelStats.glaucomatous }}
+            </h2>
             <p class="leading-relaxed">Glaucomatous</p>
           </div>
         </div>
@@ -59,7 +63,9 @@
               <circle cx="9" cy="7" r="4"></circle>
               <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
             </svg>
-            <h2 class="title-font font-medium text-3xl text-gray-900">7000</h2>
+            <h2 class="title-font font-medium text-3xl text-gray-900">
+              {{ highlevelStats.nonGlaucomatous }}
+            </h2>
             <p class="leading-relaxed">Non-Glaucomatous</p>
           </div>
         </div>
@@ -201,7 +207,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, computed, ref, onMounted } from "vue";
+import { useStore } from "vuex";
 import RegionChart from "../../components/RegionChart.vue";
 import NavbarAdmin from '../../components/navbaradmin.vue';
 
@@ -211,6 +218,26 @@ export default defineComponent({
     RegionChart,
     NavbarAdmin
   },
+  setup () {
+    const highlevelStats = ref({
+      patientsDiagnosed: 0,
+      glaucomatous: 0,
+      nonGlaucomatous: 0
+    });
+
+    const store = useStore();
+
+    onMounted(async () => {
+      await store.dispatch("patient/fetchAllPatients", { root: true });
+      highlevelStats.value.patientsDiagnosed = store.getters["patient/patientCount"];
+      highlevelStats.value.glaucomatous = store.getters["patient/glaucomatous"];
+      highlevelStats.value.nonGlaucomatous = store.getters["patient/nonGlaucomatous"];
+    })
+    
+    return {
+      highlevelStats
+    }
+  }
 });
 </script>
 
