@@ -122,12 +122,12 @@ export default defineComponent({
 
     const store = useStore();
     
-    const registerResult = computed(() => store.state.admin.registerResult);
-    const registerLoader = computed(() => store.state.admin.registerLoader);
+    const registerResult = computed(() => store.state.healthcenter.registerResult);
+    const registerLoader = computed(() => store.state.healthcenter.registerLoader);
 
     const onSubmit = async (e) => {
       e.preventDefault();
-      await store.dispatch('admin/registerHealthcenter', healthcenter.value, {root:true});
+      await store.dispatch('healthcenter/registerHealthcenter', healthcenter.value, {root:true});
       // clear form
       healthcenter.value.name = "";
       healthcenter.value.region = "";
