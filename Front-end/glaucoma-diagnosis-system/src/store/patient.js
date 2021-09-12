@@ -8,7 +8,6 @@ const patientModule = {
     allPatients: [],
     patientsByHealthcenter: [],
     patientLoader: false,
-    registerResult: "",
     registerLoader: false,
   },
 
@@ -41,11 +40,9 @@ const patientModule = {
       commit("setRegisterLoader", true);
       try {
         const response = await axios.post(`${api}/patients`, patient)
-        commit("setRegisterResult", "Success");
         console.log(response);
       } catch(error) {
-        commit("setRegisterResult", "Error");
-        console.error(error);
+        throw error;
       } finally {
         commit("setRegisterLoader", false);
       }
@@ -59,6 +56,23 @@ const patientModule = {
         console.log(response.data.allpatients);
       } catch(error) {
         console.error(error);
+      } finally {
+        commit("setPatientLoader", false);
+      }
+    },
+
+    searchPatient: async ({ commit }, patientInfo) => {
+      commit("setPatientLoader", true);
+      try {
+        const response = await axios.post(`${api}/patients/search`, patientInfo);
+        if (response.data.searchedpatient.length === 0) {
+          throw new Error("Not Found");
+        }
+        console.log(response);
+        // not implemented yet
+        // await axios.put(`${api}/patients/${response.data.searchedpatient[0]._id}`, { isDiagnosed: false });
+      } catch(error) {
+        throw error;
       } finally {
         commit("setPatientLoader", false);
       }
