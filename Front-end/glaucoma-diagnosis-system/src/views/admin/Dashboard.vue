@@ -218,7 +218,7 @@ export default defineComponent({
     RegionChart,
     NavbarAdmin
   },
-  setup () {
+  setup() {
     const highlevelStats = ref({
       patientsDiagnosed: 0,
       glaucomatous: 0,
@@ -232,11 +232,11 @@ export default defineComponent({
       highlevelStats.value.patientsDiagnosed = store.getters["patient/patientCount"];
       highlevelStats.value.glaucomatous = store.getters["patient/glaucomatous"];
       highlevelStats.value.nonGlaucomatous = store.getters["patient/nonGlaucomatous"];
-    })
+    });
     
     return {
       highlevelStats
-    }
+    };
   }
 });
 </script>
