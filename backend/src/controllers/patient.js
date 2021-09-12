@@ -129,14 +129,15 @@ exports.updatePatient = async(req,res,next)=>{
 }
 
 exports.searchPatient = async (req,res,next)=>{
+        // instead of fetching all patientsByHealthcenter and checking if the patient exist in that healthcenter,
+        // we can just search the patient by _id and check if the current patient's healthcenter and card number equals the one in the req.body
         try{
-            const patientsByhealthcenter = await patient.find({healthcenter:req.body.healthcengter});
+            const patientsByhealthcenter = await patient.find({healthcenter:req.body.healthcenter});
             const searchedpatient = patientsByhealthcenter.filter((patients)=>{
                 return patients.cardNumber==req.body.cardNumber
             });
             res.status(200).json({
                 status:"search success",
-                
                 searchedpatient
             });
 

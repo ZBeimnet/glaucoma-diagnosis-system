@@ -3,7 +3,18 @@
     <NavbarHealthCenter />
     <div class="body w-full h-full mt-0 font-sans antialiased bg-grey-lighter">
       <div class="CardNumber">
-        <div class="w-1/4 mr-20 flex mt-5 mb-0 float-right">
+        <div class="mx-auto w-2/5 mt-10 pt-5 mb-0">
+          <h2
+            class="
+              title-font
+              text-2xl text-gray-700
+              pb-5
+              text-center
+            "
+          >
+            Add Existing Patient to Queue
+          <hr class="mt-2"/>
+          </h2>
           <div class="relative text-gray-700">
             <input
               class="
@@ -18,7 +29,8 @@
                 focus:shadow-outline
               "
               type="text"
-              placeholder="Card Number"
+              placeholder="Enter Card Number"
+              v-model="cardNumber"
             />
             <button
               class="
@@ -35,12 +47,22 @@
                 hover:bg-blue-500
                 focus:bg-indigo-700
               "
+              @click="addToQueue"
             >
-              Search
+              Add to Queue
             </button>
           </div>
+          <!-- loading -->
+          <h2 class="title-font text-center mt-5 text-blue-700" v-if="patientLoader">
+            Loading..
+          </h2>
+          <!-- confirmation -->
+          <h2 class="title-font text-center mt-5 text-green-700" v-if="!patientLoader"> 
+            {{ searchResult }}
+          </h2>
         </div>
       </div>
+      
       <div class="w-full bg-grey-lightest mt-0" style="padding-top: 4rem">
         <div class="container mx-auto py-8">
           <div class="w-5/6 lg:w-1/2 mx-auto bg-white rounded shadow">
@@ -54,7 +76,7 @@
                 bg-blue-400
               "
             >
-              Patient Registration
+              New Patient Registration
             </div>
             <div class="py-4 px-8">
               <div class="flex mb-4">
@@ -294,10 +316,7 @@
                 >
                   Register
                 </button>
-                <label class="text-gray-700 ml-5">
-                  <input type="checkbox" value="" />
-                  <span class="ml-1">Create new patient</span>
-                </label>
+
                 <span class="text-blue-700 ml-10" v-if="registerLoader">
                   Loading...
                 </span>
@@ -328,38 +347,68 @@ export default defineComponent({
   },
   setup() {
     const patient = ref({
-      firstname: '',
-      lastname: '',
-      age: '',
-      region: '',
-      subcity: '',
-      gender: '',
-      phoneno: '',
-      screentime: ''
+      firstname: "",
+      lastname: "",
+      age: "",
+      region: "",
+      subcity: "",
+      gender: "",
+      phoneno: "",
+      screentime: "",
     });
+    const cardNumber = ref("");
+    const searchResult = ref("");
+    const registerResult = ref("");
+
     const store = useStore();
-    
-    const registerResult = computed(() => store.state.patient.registerResult);
+
     const registerLoader = computed(() => store.state.patient.registerLoader);
-    
+    const patientLoader = computed(() => store.state.patient.patientLoader);
+
     const registerPatient = async function() {
-      await store.dispatch('patient/registerPatient', patient.value, {root:true});
+      try {
+        await store.dispatch("patient/registerPatient", patient.value, {
+          root: true,
+        });
+        registerResult.value = "Success";
+      } catch(error) {
+        registerResult.value = "Error";
+      }
       // clear form
-      patient.value.firstname = '';
-      patient.value.lastname = '';
-      patient.value.age = '';
-      patient.value.region = '';
-      patient.value.subcity = '';
-      patient.value.gender = '';
-      patient.value.phoneno = '';
-      patient.value.screentime = '';
-    }
+      patient.value.firstname = "";
+      patient.value.lastname = "";
+      patient.value.age = "";
+      patient.value.region = "";
+      patient.value.subcity = "";
+      patient.value.gender = "";
+      patient.value.phoneno = "";
+      patient.value.screentime = "";
+    };
+
+    const addToQueue = async function() {
+      // get healthcenter_id from the logged user
+      // for now, using healthcenter_id for blacklion
+      const patientInfo = {
+        healthcenter: "612cc8a77715aecd82c2ada1",
+        cardNumber: cardNumber.value
+      };
+      try {
+        await store.dispatch("patient/searchPatient", patientInfo, { root: true });
+        searchResult.value = "Success";
+      } catch(error) {
+        searchResult.value = "Patient Not Found";
+      }
+    };
 
     return {
       patient,
       registerResult,
       registerLoader,
-      registerPatient
+      registerPatient,
+      addToQueue,
+      cardNumber,
+      searchResult,
+      patientLoader
     };
   },
 });
