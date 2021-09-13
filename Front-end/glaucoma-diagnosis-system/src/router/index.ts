@@ -6,7 +6,8 @@ import Labratory from '/src/views/Labratory.vue'
 import Diagnose from '/src/views/Diagnose.vue'
 import AdminDashboard from '/src/views/admin/Dashboard.vue'
 import HCDashboard from '/src/views/health-care-center/Dashboard.vue'
-import adminmanage from '/src/views/adminManage.vue';
+import adminmanage from '/src/views/adminManage.vue'
+import PatientQueue from '/src/views/health-care-center/PatientQueue.vue'
 
 
 const routes = [
@@ -41,9 +42,14 @@ const routes = [
         component: Labratory,
     },
     {
-        path: '/diagnose',
+        path: '/diagnose/:patientId',
         name: 'Diagnose',
         component : Diagnose,
+    },
+    {
+        path: '/patientQueue',
+        name: 'PatientQueue',
+        component : PatientQueue,
     },
     {
         path: '/admin/dashboard',

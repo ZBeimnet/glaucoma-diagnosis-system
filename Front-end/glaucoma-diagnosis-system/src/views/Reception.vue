@@ -367,6 +367,8 @@ export default defineComponent({
 
     const registerPatient = async function() {
       try {
+        // get healthcenter_id from the logged user
+        patient.value = {...patient.value, healthcenter: "612cc8a77715aecd82c2ada1"};
         await store.dispatch("patient/registerPatient", patient.value, {
           root: true,
         });
