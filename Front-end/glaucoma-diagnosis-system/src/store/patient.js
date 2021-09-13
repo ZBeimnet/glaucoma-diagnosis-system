@@ -7,6 +7,7 @@ const patientModule = {
   state: {
     allPatients: [],
     patientsByHealthcenter: [],
+    singlePatient: {patientresult: []},
     patientLoader: false,
     registerLoader: false,
   },
@@ -32,7 +33,8 @@ const patientModule = {
     setPatientsByHealthcenter: (state, payload) => state.patientsByHealthcenter = payload,
     setPatientLoader: (state, payload) => state.patientLoader = payload,
     setRegisterResult: (state, payload) => state.registerResult = payload,
-    setRegisterLoader: (state, payload) => state.registerLoader = payload
+    setRegisterLoader: (state, payload) => state.registerLoader = payload,
+    setSinglePatient: (state, payload) => state.singlePatient = payload
   },
 
   actions: {
@@ -78,22 +80,30 @@ const patientModule = {
       }
     },
 
-    fetchPatientsByHealthcenter: ({ commit }, healthcenterId) => {
+    fetchPatientsByHealthcenter: async ({ commit }, healthcenterId) => {
       commit("setPatientLoader", true);
-      axios
-        .get(
-          `${api}/${healthcenterId}/patients`
-        )
-        .then((response) => {
-          commit("setPatientsByHealthcenter", response.data.allpatients);
-          console.log(response.data.allpatients);
-        })
-        .catch((error) => {
-          console.error(error);
-        })
-        .finally(() => {
-          commit("setPatientLoader", false);
-        });
+      try {
+        const response = await axios.get(`${api}/patients/healthcenter/${healthcenterId}`);
+        commit("setPatientsByHealthcenter", response.data.patientsByhealthcenter);
+        console.log(response.data.patientsByhealthcenter);
+      } catch(error) {
+        throw error;
+      } finally {
+        commit("setPatientLoader", false);
+      }
+    },
+
+    fetchSinglePatient: async ({ commit }, patientId) => {
+      commit("setPatientLoader", true);
+      try {
+        const response = await axios.get(`${api}/patients/${patientId}`);
+        commit("setSinglePatient", response.data.Patient);
+        console.log(response.data.Patient);
+      } catch(error) {
+        throw error;
+      } finally {
+        commit("setPatientLoader", false);
+      }
     }
   }
 };
