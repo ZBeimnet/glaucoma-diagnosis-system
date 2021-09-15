@@ -26,6 +26,19 @@ const patientModule = {
       }
       return patient.patientresult[0].doctorFinalDecision === "GlaucomaNegative";
     }).length,
+    hcPatientCount: (state) => state.patientsByHealthcenter.filter((patient) => patient.patientresult.length !== 0).length,
+    hcGlaucomatous: (state) => state.patientsByHealthcenter.filter(function(patient) {
+      if (patient.patientresult.length === 0) {
+        return false;
+      }
+      return patient.patientresult[0].doctorFinalDecision === "GlaucomaPositive";
+    }).length,
+    hcNonGlaucomatous: (state) => state.patientsByHealthcenter.filter(function(patient) {
+      if (patient.patientresult.length === 0) {
+        return false;
+      }
+      return patient.patientresult[0].doctorFinalDecision === "GlaucomaNegative";
+    }).length
   },
 
   mutations: {
