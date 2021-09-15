@@ -113,8 +113,7 @@ exports.updatePatient = async(req,res,next)=>{
         updatePatient.isDiagnosed = true;    
         updatePatient.patientresult.push({
            ...req.body,
-           image:req.file.filename
-       });
+           });
        updatePatient.save();
 
 
