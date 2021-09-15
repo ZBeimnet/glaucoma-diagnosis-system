@@ -110,6 +110,29 @@ exports.deleteHealthcenter = async(req,res,next)=>{
         }
 }
 
+exports.deleteHealthcenterById = async(req,res,next)=>{
+    try{
+            const deletedHealthcenter = await healthcenter.findByIdAndDelete(req.params.id);
+            if(!deletedHealthcenter){
+                res.status(404).json({
+                    status: "error",
+                    message: "The health center not found",
+                  });
+            }
+
+            else{
+                res.status(200).json({
+                    status:"success",
+                    deletedHealthcenter
+                });
+            }
+            
+    }  
+    catch(err){
+
+    }
+}
+
 exports.updateHealthcenter = async(req,res,next)=>{
     try{
         const updatehealthcenter = await healthcenter.findByIdAndUpdate(req.params.id,req.body,{new:true}); 

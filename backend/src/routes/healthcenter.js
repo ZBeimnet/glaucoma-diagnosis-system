@@ -12,5 +12,7 @@ router.post("/",healthcenterController.createHealthcenter);
 router.post("/login",healthcenterController.login);
 router.delete("/",healthcenterController.deleteHealthcenter);
 router.put("/:id",healthcenterController.updateHealthcenter);
+router.delete("/:id",healthcenterController.deleteHealthcenterById);
+
 
 module.exports = router;
