@@ -103,7 +103,7 @@ exports.getPatientByHealthcenter = async (req,res,next)=>{
 exports.updatePatient = async(req,res,next)=>{
     try{
     
-       const updatePatient = await patient.findById(req.params.id);
+        const updatePatient = await patient.findById(req.params.id);
        if(!updatePatient){
             res.staus(404).json({
                 status:"not found",
@@ -132,7 +132,11 @@ exports.searchPatient = async (req,res,next)=>{
         try{
             const patientsByhealthcenter = await patient.find({healthcenter:req.body.healthcenter});
             const searchedpatient = patientsByhealthcenter.filter((patients)=>{
-                return patients.cardNumber==req.body.cardNumber
+                if(patients.cardNumber==req.body.cardNumber){
+                    patients.isDiagnosed = false;
+                    patients.save();
+                    return patients;
+                }
             });
             res.status(200).json({
                 status:"search success",
