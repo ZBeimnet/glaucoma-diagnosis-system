@@ -1,10 +1,59 @@
 <template>
   <div>
     <NavbarHealthCenter />
+      <div>
+        <h2
+          class="
+            title-font
+            font-medium
+            text-3xl text-gray-900
+            mt-10
+            text-center
+          "
+        >
+          Health Center Stat
+        </h2>
+      </div>
+      <div class="mt-5 divide-x">
+        <div class="my-5 px-7 flex justify-center">
+          <span class="font-medium self-center">Filter</span>
+          <select
+            class="appearance-none border rounded py-2 px-3 mx-3"
+            id="age-group"
+            placeholder="Age Group"
+          >
+            <option>Age Group</option>
+            <option>Below 13</option>
+            <option>13 - 19</option>
+            <option>20 - 35</option>
+            <option>36 - 50</option>
+            <option>Above 50</option>
+          </select>
+          <select
+            class="appearance-none border rounded py-2 px-3 mx-3"
+            id="gender"
+            placeholder="Gender"
+          >
+            <option>Gender</option>
+            <option>Male</option>
+            <option>Female</option>
+          </select>
+          <select
+            class="appearance-none border rounded py-2 px-3 mx-3"
+            id="other-criteria"
+            placeholder="Other Criteria"
+          >
+            <option>Other Criteria</option>
+            <option>Computer User</option>
+            <option>Criterion-2</option>
+            <option>Criterion-3</option>
+          </select>
+        </div>
+      </div>
     <!-- Highlevel stats -->
     <div class="body">
       <section class="text-gray-600 body-font">
-        <div class="mx-10 px-10 pt-16 mx-auto">
+        <div class="mx-10 px-10 pt-5 mx-auto">
           <div class="flex flex-wrap -m-4 text-center">
             <div class="p-4 md:w-1/3 sm:w-1/2 w-full">
               <div class="border-2 border-gray-200 px-4 py-6 rounded-lg">
@@ -78,57 +127,7 @@
           </div>
         </div>
       </section>
-      <!-- Detail stat and graph -->
-      <div>
-        <h2
-          class="
-            title-font
-            font-medium
-            text-3xl text-gray-900
-            mt-10
-            pt-5
-            text-center
-          "
-        >
-          Detailed Regional Stat
-        </h2>
-      </div>
-      <div class="mt-5 divide-x">
-        <div class="my-5 px-7 flex justify-center">
-          <span class="font-medium self-center">Filter</span>
-          <select
-            class="appearance-none border rounded py-2 px-3 mx-3"
-            id="age-group"
-            placeholder="Age Group"
-          >
-            <option>Age Group</option>
-            <option>Below 13</option>
-            <option>13 - 19</option>
-            <option>20 - 35</option>
-            <option>36 - 50</option>
-            <option>Above 50</option>
-          </select>
-          <select
-            class="appearance-none border rounded py-2 px-3 mx-3"
-            id="gender"
-            placeholder="Gender"
-          >
-            <option>Gender</option>
-            <option>Male</option>
-            <option>Female</option>
-          </select>
-          <select
-            class="appearance-none border rounded py-2 px-3 mx-3"
-            id="other-criteria"
-            placeholder="Other Criteria"
-          >
-            <option>Other Criteria</option>
-            <option>Computer User</option>
-            <option>Criterion-2</option>
-            <option>Criterion-3</option>
-          </select>
-        </div>
-      </div>
+      
       <div class="mb-10 pt-10">
         <div class="lg:w-1/3 md:w-2/3 mx-auto">
           <div>

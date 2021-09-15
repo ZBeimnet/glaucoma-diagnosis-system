@@ -38,7 +38,36 @@ const patientModule = {
         return false;
       }
       return patient.patientresult[0].doctorFinalDecision === "GlaucomaNegative";
-    }).length
+    }).length,
+    adminChartData: function(state) {
+      let regions = new Object();
+      for (let key in state.allPatients) {
+        let patient = state.allPatients[key];
+        if (patient.region in regions && patient.isDiagnosed) {
+          regions[patient.region][0] += 1;
+          if (patient.patientresult[0].doctorFinalDecision === "GlaucomaPositive") {
+            regions[patient.region][1] += 1;
+          }
+        } else {
+          regions[patient.region] = [0, 0];
+        }
+      }
+      let labels = ["Addis Ababa", "Afar", "Amhara", "Benishangul", "Dire Dawa", "Gambela", "Harari", "Oromia", "Tigray", "SNNPR"];
+      let chartData = {
+        total: [],
+        glaucomatous: []
+      };
+      for (let region in labels) {
+        if (labels[region] in regions) {
+          chartData.total.push(regions[labels[region]][0]);
+          chartData.glaucomatous.push(regions[labels[region]][1]);
+        } else {
+          chartData.total.push(0);
+          chartData.glaucomatous.push(0);
+        }
+      }
+      return chartData;
+    }
   },
 
   mutations: {
