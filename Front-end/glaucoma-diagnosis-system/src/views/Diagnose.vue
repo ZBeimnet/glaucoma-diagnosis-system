@@ -131,47 +131,45 @@
                   </div>
                 </div>
               </div>
-              <div class="inline-flex mt-5 w-1/2">
+              <div class="inline-flex mt-5 w-2/3">
                 <!-- <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" @click="get_result">
                     Diagnose
                 </button> -->
                 <div class="relative text-gray-700 w-full">
+                <form id="form" @submit.prevent="getResult">
                   <input
-                    v-model="image_url"
                     class="
                       overflow-clip overflow-hidden
                       w-full
-                      h-10
-                      pl-3
-                      pr-8
                       text-base
                       placeholder-gray-600
                       border
                       rounded-lg
                       focus:shadow-outline
                     "
-                    type="text"
-                    placeholder="Enter Image Url"
+                    type="file"
+                    name="file"
                   />
-                  <button
-                    class="
-                      absolute
-                      inset-y-0
-                      right-0
-                      flex
-                      items-center
-                      px-4
-                      font-bold
-                      text-white
-                      bg-indigo-600
-                      rounded-r-lg
-                      hover:bg-blue-500
-                      focus:bg-indigo-700
-                    "
-                    @click="getResult"
-                  >
-                    Diagnose
-                  </button>
+                    <button
+                      class="
+                        absolute
+                        inset-y-0
+                        right-0
+                        flex
+                        items-center
+                        px-4
+                        font-bold
+                        text-white
+                        bg-indigo-600
+                        rounded-r-lg
+                        hover:bg-blue-500
+                        focus:bg-indigo-700
+                      "
+                      type="submit"
+                    >
+                      Diagnose
+                    </button>
+                  </form>
                 </div>
                 <!-- <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4  ml-5 fas fa-arrow-right" @click="get_next_patient">
                     
@@ -239,18 +237,22 @@ export default {
     Loader,
   },
   setup() {
-    const image_url = ref("");
     const store = useStore();
 
     const prediction_result = computed(
       () => store.state.diagnose.predictionResult
     );
     const loading = computed(() => store.state.diagnose.predictionLoader);
+    const image_url = computed(() => store.state.diagnose.imageUrl);
 
-    const getResult = () =>
-      store.dispatch("diagnose/fetchPredictionResult", image_url.value, {
+    const getResult = () => {
+      let form = document.getElementById('form');
+      let formData = new FormData(form);
+      formData.append("upload_preset", "cehkc3gq");
+      store.dispatch("diagnose/fetchPredictionResult", formData, {
         root: true,
       });
+    }
 
     function getColor(virdict) {
       if (virdict === "Glaucoma Positive") {
