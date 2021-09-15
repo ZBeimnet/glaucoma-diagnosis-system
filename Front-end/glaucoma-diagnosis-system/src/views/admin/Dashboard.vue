@@ -199,7 +199,7 @@
       </table>
     </div>
     <div>
-      <RegionChart />
+      <!-- <RegionChart /> -->
     </div>
   </div>
   </div>
@@ -209,13 +209,11 @@
 <script lang="ts">
 import { defineComponent, computed, ref, onMounted } from "vue";
 import { useStore } from "vuex";
-import RegionChart from "../../components/RegionChart.vue";
 import NavbarAdmin from '../../components/navbaradmin.vue';
 
 export default defineComponent({
   name: "AdminDashboard",
   components: {
-    RegionChart,
     NavbarAdmin
   },
   setup() {
