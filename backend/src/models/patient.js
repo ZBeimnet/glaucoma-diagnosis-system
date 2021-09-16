@@ -20,7 +20,7 @@ const patientSchema = new Schema({
         type:Number
     },
     screentime:{
-        type:String
+        type:Number
     },
     phoneno:{
         type:String

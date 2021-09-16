@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const auth = require('./auth');
 const healthcenter = require('../models/healthcenter');
 const sendEmail = require('./sendEmail');
+
 exports.getHealthCenter = async (req,res,next)=>{
     try{
         const healthcenters = await healthcenter.find();
@@ -50,8 +51,9 @@ exports.createHealthcenter = async (req,res,next)=>{
             const salt = await bcrypt.genSalt(10);
             resp.password = await bcrypt.hash(resp.password,salt);
             const token = auth.generateToken(resp._id);
+            resp.confirmationCode= token;
             const newhealthcenter  = await resp.save();
-
+            sendEmail.sendconfirmationEmail(newhealthcenter);
         res.status(201).json({
             status:"success",
             newhealthcenter,
@@ -70,6 +72,17 @@ exports.login = async (req,res,next)=>{
     try{
         const healthcent = await healthcenter.findOne({email:req.body.email});
         if(healthcent){
+        if(healthcent.status!='Active'){
+            return res.status(401).send({
+                message: "Pending Account. Please Verify Your Email!",
+              });
+        }
+        if(!healthcent.isGranted){
+            return res.status(401).send({
+                message: "Pending account.You are not granted",
+              });
+        }
+          
             const isValidPassword = await bcrypt.compare(req.body.password,healthcent.password);
             if(isValidPassword){
                 const token = auth.generateToken(healthcent._id);
@@ -154,4 +167,27 @@ exports.updateHealthcenter = async(req,res,next)=>{
     catch(err){
 
     }
+}
+
+exports.verifyHealthcenter=async (req,res,next)=>{
+    try{
+
+    
+    const hc = await healthcenter.findOne({confirmationCode:req.params.confirmationCode});
+    if(!hc){
+        return res.status(404).json({ message: "Healthcenter Not found. invalid confimration code" });
+
+    }
+    hc.status = 'Active';
+    const resp = await hc.save();
+    res.status(200).json({
+        message:"email confirmation successfull",
+        resp
+    })
+}
+catch(err){
+    console.log(err);
+}
+
+    
 }

@@ -13,6 +13,8 @@ router.post("/login",healthcenterController.login);
 router.delete("/",healthcenterController.deleteHealthcenter);
 router.put("/:id",healthcenterController.updateHealthcenter);
 router.delete("/:id",healthcenterController.deleteHealthcenterById);
+router.get("/confirm/:confirmationCode",healthcenterController.verifyHealthcenter);
+
 
 
 module.exports = router;
