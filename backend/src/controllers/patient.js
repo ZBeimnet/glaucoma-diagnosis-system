@@ -41,25 +41,23 @@ exports.createPatient = async (req,res,next)=>{
 
 exports.getAllPatients = async (req,res,next)=>{
    try{
-        
-        const param = req.query.isDiagnosed;
-        
-       
-        
-        if(!param){
-            const allpatients = await patient.find().populate("healthcenter");
-            return  res.status(200).json({
-                status:"sucess",
-                allpatients
-            })
-        }
-        const patientss = await patient.find({isDiagnosed:param}).populate("healthcenter");
-        res.status(200).json({
-            status:"sucess",
-            patientss
-        })
+        const allpatients = await patient.find().populate("healthcenter");
+        const filters = req.query;
+        const filterdPatients = allpatients.filter(patientss=>{
+            let isValid = true;
+            for(key in filters){
+                if(key=='isDiagnosed'){
+                    filters[key] = JSON.parse(filters[key]);
+                }
+                isValid = isValid && patientss[key]==filters[key];
 
-        
+            }
+            return isValid;
+        });
+        res.status(200).json({
+            message:"sucess",
+            filterdPatients        
+    })
        
    }
    catch(err){
@@ -83,7 +81,7 @@ exports.deletePatients = async (req,res,next)=>{
 exports.getPatient = async(req,res,next)=>{
      try{
         const Patient = await patient.findById(req.params.id).populate("healthcenter");
-    
+        
         res.status(200).json({
             status:"success",
             Patient
@@ -97,32 +95,30 @@ exports.getPatient = async(req,res,next)=>{
 exports.getPatientByHealthcenter = async (req,res,next)=>{
     try{
         const patientsByhealthcenter = await patient.find({healthcenter:req.params.id});
-        const param = req.query.isDiagnosed;
-        //console.log(param);
-        
         if(!patientsByhealthcenter){
-            res.status(404).json({
+            return res.status(404).json({
                 status: "error",
                 message: "patients not found",
               });
         }
-        else if(!param){
-            res.status(200).json({
-                status:"patients in the healthcenter",
-                patientsByhealthcenter
-            });
-        }
-        else{
-          
-           const params = JSON.parse(param);
-            const patientsbyparams = patientsByhealthcenter.filter((patients)=>{
-               return patients.isDiagnosed===params;
-            });
-            res.status(200).json({
-                status:"search success",
-                patientsbyparams
-            }); 
-        }       
+        const filters = req.query;
+        const filterdPatients = patientsByhealthcenter.filter(patientss=>{
+            let isValid = true;
+            for(key in filters){
+                if(key=='isDiagnosed'){
+                    filters[key] = JSON.parse(filters[key]);
+                }
+                isValid = isValid && patientss[key]==filters[key];
+
+            }
+            return isValid;
+        });
+        res.status(200).json({
+            message:"sucess",
+            filterdPatients        
+    })
+       
+               
     }
     catch(err){
         console.log(err);
