@@ -8,7 +8,7 @@ router.post("/search",patientController.searchPatient);
 router.post("/",patientController.createPatient);
 router.delete("/",patientController.deletePatients);
 router.get("/:id",patientController.getPatient);
-router.put("/:id",patientController.uploadImage,patientController.updatePatient);
+router.put("/:id",patientController.updatePatient);
 
 
 module.exports = router;
