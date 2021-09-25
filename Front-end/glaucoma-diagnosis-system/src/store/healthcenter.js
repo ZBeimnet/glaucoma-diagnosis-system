@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const api = 'https://aait-glaucoma-diagnosis.herokuapp.com'
+const api = 'https://glaucoma-diagnosis-aait.herokuapp.com'
 
 const healthcenterModule = {
   namespaced: true,
