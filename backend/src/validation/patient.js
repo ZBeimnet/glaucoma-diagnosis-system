@@ -24,7 +24,15 @@ exports.validation = (type)=>{
         body("patientresult.probablity").not().isEmpty().withMessage("probablity is required"),
         body("patientresult.doctorFinalDecision").not().isEmpty().withMessage("doctor final decision is required"),
     ];
+    case "SEARCH":
+        return[
+            body("healthcenter").not().isEmpty().withMessage("healthcenter must login"),
+            body("cardNumber").not().isEmpty().withMessage("card number is required"),
+            body("cardNumber").isNumeric().withMessage("card number must be a valid number"),
+            
+           
+        ];
     default:
-        return []
+        return [];
     }
 }

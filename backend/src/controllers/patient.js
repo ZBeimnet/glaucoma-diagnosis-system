@@ -144,6 +144,13 @@ exports.updatePatient = async(req,res,next)=>{
 
 exports.searchPatient = async (req,res,next)=>{
         try{
+            const errors = validationResult(req);
+        if(!errors.isEmpty()){
+            return res.status(400).json({
+                status: "error",
+                message: errors.array()[0],
+              }); 
+        }
             const patientsByhealthcenter = await patient.find({healthcenter:req.body.healthcenter});
             const searchedpatient = patientsByhealthcenter.filter((patients)=>{
                 if(patients.cardNumber==req.body.cardNumber){

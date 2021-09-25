@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const auth = require('./auth');
 const healthcenter = require('../models/healthcenter');
 const sendEmail = require('./sendEmail');
+const {validationResult} = require('express-validator');
 
 exports.getHealthCenter = async (req,res,next)=>{
     try{
@@ -38,6 +39,13 @@ exports.getHealthCenterById = async (req,res,next)=>{
 exports.createHealthcenter = async (req,res,next)=>{
      
     try{
+        const errors = validationResult(req);
+        if(!errors.isEmpty()){
+            return res.status(400).json({
+                status: "error",
+                message: errors.array(),
+              }); 
+            }
         const healthcenterExists = await healthcenter.findOne({email:req.body.email});
         if(healthcenterExists){
             return res.status(409).json({
