@@ -19,8 +19,11 @@ const patientSchema = new Schema({
     age:{
         type:Number
     },
+    age_group:{
+        type:String,
+    },
     screentime:{
-        type:Number
+        type:String
     },
     phoneno:{
         type:String

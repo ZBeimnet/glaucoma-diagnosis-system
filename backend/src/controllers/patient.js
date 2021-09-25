@@ -23,11 +23,29 @@ exports.createPatient = async (req,res,next)=>{
     try{
         
         const patientsByhealthcentercount = await patient.find({healthcenter:req.body.healthcenter}).count()+1; 
+        const patientage = req.body.age;
+        let ageGroup;
+        if(patientage<13){
+            ageGroup = "0-12";
+        }
+        else if(patientage>=13 && patientage<=18){
+            ageGroup = "13-18"
+        }
+        else if(patientage>18 && patientage<=30){
+            ageGroup = "19-30";
+        }
+        else if(patientage>30 && patientage<=50){
+            ageGroup="31-50";
 
+        }
+        else{
+            ageGroup = ">50"
+        }
         
         const newpatient = await patient.create({
              cardNumber:patientsByhealthcentercount,
-            ...req.body
+             age_group:ageGroup,
+             ...req.body
         });
         res.status(201).json({
             status:"sucess",
@@ -41,22 +59,10 @@ exports.createPatient = async (req,res,next)=>{
 
 exports.getAllPatients = async (req,res,next)=>{
    try{
-        const allpatients = await patient.find().populate("healthcenter");
-        const filters = req.query;
-        const filterdPatients = allpatients.filter(patientss=>{
-            let isValid = true;
-            for(key in filters){
-                if(key=='isDiagnosed'){
-                    filters[key] = JSON.parse(filters[key]);
-                }
-                isValid = isValid && patientss[key]==filters[key];
-
-            }
-            return isValid;
-        });
-        res.status(200).json({
+        const allpatients = await patient.find(req.query).populate("healthcenter");
+            res.status(200).json({
             message:"sucess",
-            filterdPatients        
+            allpatients        
     })
        
    }
@@ -108,6 +114,7 @@ exports.getPatientByHealthcenter = async (req,res,next)=>{
                 if(key=='isDiagnosed'){
                     filters[key] = JSON.parse(filters[key]);
                 }
+                
                 isValid = isValid && patientss[key]==filters[key];
 
             }
