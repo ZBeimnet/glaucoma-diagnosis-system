@@ -103,29 +103,24 @@ exports.getPatientByHealthcenter = async (req,res,next)=>{
 exports.updatePatient = async(req,res,next)=>{
     try{
     
-        const updatePatient = await patient.findById(req.params.id);
-       if(!updatePatient){
-            res.staus(404).json({
-                status:"not found",
+        exports.updatePatient = async(req,res,next)=>{
+            try{
+                 
+            const updatePatient = await patient.findByIdAndUpdate(req.params.id,req.body,{new:true});
+                 res.status(200).json({
+                   status:"success",
+                   updatePatient
+               });
+            }
+            catch(err){
+                console.log(err);
+            }
+        }
 
-            });
-       }
-        updatePatient.isDiagnosed = true;    
-        updatePatient.patientresult.push({
-           ...req.body,
-           });
-       updatePatient.save();
 
+       
+  
 
-       res.status(200).json({
-           status:"success",
-           updatePatient
-       });
-    }
-    catch(err){
-
-    }
-}
 
 exports.searchPatient = async (req,res,next)=>{
         try{
