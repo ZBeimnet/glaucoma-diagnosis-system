@@ -101,9 +101,7 @@ exports.getPatientByHealthcenter = async (req,res,next)=>{
 }
 
 exports.updatePatient = async(req,res,next)=>{
-    try{
     
-        exports.updatePatient = async(req,res,next)=>{
             try{
                  
             const updatePatient = await patient.findByIdAndUpdate(req.params.id,req.body,{new:true});
