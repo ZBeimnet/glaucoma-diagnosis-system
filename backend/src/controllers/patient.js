@@ -1,7 +1,9 @@
 const patient = require('../models/patient');
+const {validationResult} = require('express-validator');
 const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
+
 
 const storage = multer.diskStorage({
     destination:function(req,file,cb){
@@ -21,7 +23,21 @@ exports.uploadImage = upload.single("image");
 
 exports.createPatient = async (req,res,next)=>{
     try{
-        
+        const errors = validationResult(req);
+        if(!errors.isEmpty()){
+            return res.status(400).json({
+                status: "error",
+                message: errors.array(),
+              }); 
+        }
+        const pat = await patient.findOne({phoneno:req.body.phoneno});
+        if(pat){
+            return res.status(400).json({
+                status:"error",
+                message:"patient already exists"
+
+            })
+        }
         const patientsByhealthcentercount = await patient.find({healthcenter:req.body.healthcenter}).count()+1; 
 
         
@@ -103,7 +119,13 @@ exports.getPatientByHealthcenter = async (req,res,next)=>{
 exports.updatePatient = async(req,res,next)=>{
     
             try{
-                 
+                const errors = validationResult(req);
+                if(!errors.isEmpty()){
+                    return res.status(400).json({
+                        status: "error",
+                        message: errors.array(),
+                      }); 
+                }
             const updatePatient = await patient.findByIdAndUpdate(req.params.id,req.body,{new:true});
                  res.status(200).json({
                    status:"success",
