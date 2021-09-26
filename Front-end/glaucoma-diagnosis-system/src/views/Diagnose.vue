@@ -57,8 +57,8 @@
               class="text-center"
               :class="getColor(prediction_result.tagName)"
             >
-              <p class="">{{ prediction_result.tagName }}</p>
-              <p>Probability: {{ prediction_result.probability }}</p>
+              <p class="">{{ getResultMap(prediction_result.tagName) }}</p>
+              <p>Probability: {{ (prediction_result.probability * 100).toFixed(2) }}%</p>
             </div>
             <Loader :loaderColor="loaderColor" v-if="loading" />
             <!-- <div class="animate-pulse flex space-x-4 hidden" id="result">
@@ -266,7 +266,7 @@
                       <div class="flex-grow sm:pl-8">
                         <ul class="px-0">
                           <li class="border list-none rounded-sm px-3 py-3 font-medium" style='border-bottom-width:0'>Date: <span class="font-normal"> {{ result.date }} </span></li>
-                          <li class="border list-none rounded-sm px-3 py-3 font-medium" style='border-bottom-width:0'>Model Result: <span class="font-normal"> {{ result.result }} ( with {{ result.probablity }} Probability ) </span></li>
+                          <li class="border list-none rounded-sm px-3 py-3 font-medium" style='border-bottom-width:0'>Model Result: <span class="font-normal"> {{ result.result }} ( with {{ result.probablity }}% Probability ) </span></li>
                           <li class="border list-none rounded-sm px-3 py-3 font-medium" >Doctor Decision: <span class="font-normal"> {{ result.doctorFinalDecision }} </span> </li>
                         </ul>
                       </div>
@@ -315,12 +315,10 @@ export default {
     };
 
     function getColor(virdict) {
-      if (virdict === "Glaucoma Positive") {
-        return "text-red-600";
-      }
-      if (virdict === "Glaucoma Negative") {
+      if (virdict === "healthy") {
         return "text-green-600";
       }
+      return "text-red-600";
     }
 
     const errorMessage = ref("");
@@ -347,11 +345,12 @@ export default {
     });
 
     async function accept() {
-      const today = new Date();
+      let date = new Date();
+      let today = date.toDateString();
       const new_result = {
-        date: today.toDateString(),
-        result: store.state.diagnose.predictionResult.tagName,
-        probablity: store.state.diagnose.predictionResult.probability,
+        date: today,
+        result: getResultMap(store.state.diagnose.predictionResult.tagName),
+        probablity: (store.state.diagnose.predictionResult.probability * 100).toFixed(2),
         doctorFinalDecision: "Accepted",
         image: image_url.value
       }
@@ -374,11 +373,12 @@ export default {
     }
 
     async function decline() {
-      const today = new Date();
+      let date = new Date();
+      let today = date.toDateString();
       const new_result = {
-        date: today.toDateString(),
-        result: store.state.diagnose.predictionResult.tagName,
-        probablity: store.state.diagnose.predictionResult.probability,
+        date: today,
+        result: getResultMap(store.state.diagnose.predictionResult.tagName),
+        probablity: (store.state.diagnose.predictionResult.probability * 100).toFixed(2),
         doctorFinalDecision: "Declined",
         image: image_url.value
       }
@@ -400,6 +400,13 @@ export default {
       }
     }
 
+    function getResultMap(input) {
+      if (input === 'healthy') {
+        return 'Glaucoma Negative';
+      }
+      return 'Glaucoma Positive';
+    }
+
     return {
       prediction_result,
       loading,
@@ -412,7 +419,8 @@ export default {
       errorMessage,
       accept,
       decline,
-      resultLength
+      resultLength,
+      getResultMap
     };
   },
 };
