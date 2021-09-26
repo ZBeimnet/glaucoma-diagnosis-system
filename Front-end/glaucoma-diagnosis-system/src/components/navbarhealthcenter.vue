@@ -27,7 +27,7 @@
 
 							<router-link to="/reception" class="py-4 px-2 text-gray-500 font-semibold hover:text-blue-500 transition duration-300">Reception</router-link>
                             <router-link to="/patientQueue" class="py-4 px-2 text-gray-500 font-semibold hover:text-blue-500 transition duration-300">Patient Queue</router-link>
-                         <router-link to="/lab" class="py-4 px-2 text-gray-500 font-semibold hover:text-blue-500 transition duration-300">Lab</router-link>
+                         <router-link to="/user" class="py-4 px-2 text-gray-500 font-semibold hover:text-blue-500 transition duration-300">Register User</router-link>
 
 							
 						</div>
