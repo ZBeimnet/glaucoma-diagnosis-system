@@ -2,8 +2,7 @@ const bcrypt = require('bcrypt');
 const auth = require('./auth');
 const healthcenter = require('../models/healthcenter');
 const sendEmail = require('./sendEmail');
-const {validationResult} = require('express-validator');
-
+const user = require('../models/user');
 exports.getHealthCenter = async (req,res,next)=>{
     try{
         const healthcenters = await healthcenter.find();
@@ -39,13 +38,6 @@ exports.getHealthCenterById = async (req,res,next)=>{
 exports.createHealthcenter = async (req,res,next)=>{
      
     try{
-        const errors = validationResult(req);
-        if(!errors.isEmpty()){
-            return res.status(400).json({
-                status: "error",
-                message: errors.array(),
-              }); 
-            }
         const healthcenterExists = await healthcenter.findOne({email:req.body.email});
         if(healthcenterExists){
             return res.status(409).json({
@@ -54,17 +46,24 @@ exports.createHealthcenter = async (req,res,next)=>{
             });
 
         }
-       // const newhealthcenter = await healthcenter.create(req.body);
+       
             const resp = new healthcenter(req.body);
             const salt = await bcrypt.genSalt(10);
             resp.password = await bcrypt.hash(resp.password,salt);
-            const token = auth.generateToken(resp._id);
-            resp.confirmationCode= token;
+            resp.confirmationCode= resp._id;
+           
             const newhealthcenter  = await resp.save();
+            let newuser = new user(req.body);
+            newuser.password = resp.password;
+            newuser.healthcenter = newhealthcenter._id;
+            const token = auth.generateToken(newuser._id);
+
+            const newusers = await newuser.save();
+
             sendEmail.sendconfirmationEmail(newhealthcenter);
         res.status(201).json({
             status:"success",
-            newhealthcenter,
+            newusers,
             token
 
         })
