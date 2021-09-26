@@ -4,10 +4,14 @@
       <div class="flex justify-between">
         <div class="flex space-x-7">
           <div class="flex items-center py-4 px-2">
-            <span class="font-semibold text-gray-500 text-lg">GDS Admin</span>
+            <span class="font-semibold text-gray-500 text-lg"
+              >GDS Admin</span
+            >
           </div>
+        </div>
           <!-- Primary Navbar items -->
-          <div class="flex items-center ml-5 space-x-1">
+
+          <div class="nav flex items-center ml-5 space-x-1">
             <router-link
               to="/admin/dashboard"
               class="
@@ -36,28 +40,28 @@
               >Manage Health center</router-link
             >
           </div>
-        </div>
-        <!-- Secondary Navbar items -->
-        <div class="hidden md:flex items-center space-x-3">
-          <router-link
-            to="/"
-            class="
-              py-2
-              px-2
-              font-medium
-              text-gray-500
-              rounded
-              hover:bg-blue-400
-              hover:text-white
-              transition
-              duration-300
-            "
-            @click="logout"
-            >Log out</router-link
-          >
+          <!-- Secondary Navbar items -->
+          <div class="hidden md:flex items-center space-x">
+            <router-link
+              to="/"
+              class="
+                py-2
+                px-2
+                font-medium
+                text-gray-500
+                rounded
+                hover:bg-blue-500
+                hover:text-white
+                transition
+                duration-300
+              "
+              @click="logout"
+              >Log out</router-link
+            >
+          </div>
         </div>
       </div>
-    </div>
+    
   </nav>
 </template>
 
@@ -71,7 +75,7 @@ export default defineComponent({
   setup() {
     const store = useStore();
     
-    const logout = () => store.commit("user/setLogout");
+    const logout = () => localStorage.clear();
 
     return {
       logout

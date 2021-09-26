@@ -5,27 +5,11 @@ const api = 'https://glaucoma-diagnosis-aait.herokuapp.com'
 const userModule = {
   namespaced: true,
   state: {
-    user: {
-        email: "",
-        role: "",
-        healthcenter: ""
-    },
-    userLoader: "",
-    isLoggedIn: false
+    userLoader: ""
   },
 
   mutations: {
-    setUser: (state, payload) => state.user = payload,
     setUserLoader: (state, payload) => state.userLoader = payload,
-    setIsLoggedIn: (state, payload) => state.isLoggedIn = payload,
-    setLogout: (state) => {
-        state.user = {
-            email: "",
-            role: "",
-            healthcenter: ""
-        };
-        state.isLoggedIn = false;
-    }
   },
 
   actions: {
@@ -56,8 +40,7 @@ const userModule = {
           newUser.role = response.data.User.role;
           newUser.email = response.data.User.email;
           newUser.healthcenter = response.data.User.healthcenter._id;
-          commit("setUser", newUser);
-          commit("setIsLoggedIn", true);
+          localStorage.setItem('user', JSON.stringify(newUser));          
           console.log(response.data);
         } catch(error) {
           if (error.message === "Not Approved!") {

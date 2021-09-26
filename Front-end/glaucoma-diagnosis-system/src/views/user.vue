@@ -35,7 +35,7 @@
                 </div>  
                
                 <div class="md:w-2/3 md:flex-grow">
-                <select class="w-full h-10 pl-3 pr-6 text-base placeholder-gray-600 
+                <select v-model="user.role" class="w-full h-10 pl-3 pr-6 text-base placeholder-gray-600 
                 border border-grey-light rounded-lg appearance-none focus:shadow-outline">
                   <option>reception</option>
                   <option>doctor</option>
@@ -46,12 +46,34 @@
 
               <div class="flex items-center justify-center mb-5">
                 <button
+                  @click="onSubmit"
                   class="w-1/4 ml-10 text-center py-3  bg-indigo-600 text-white hover:bg-blue-500 focus:outline-none ransition duration-300 my-3"
                   type="submit"
                 >
                   Register
                 </button>
-                <div></div>
+                <div
+                  v-if="errorMessage && !userLoader"
+                >
+                  <h2 class="title-font text-center ml-5 text-red-700">
+                    {{ errorMessage }}
+                  </h2>
+                </div>
+                <div
+                  v-if="successMessage && !userLoader"
+                >
+                  <h2 class="title-font text-center ml-5 text-green-700">
+                    {{ successMessage }}
+                  </h2>
+                </div>
+                <!-- loading -->
+                <div
+                  v-if="userLoader"
+                >
+                  <h2 class="title-font text-center ml-5 text-blue-700">
+                      Loading...
+                  </h2>
+                </div>
               </div>
             </form>
           </div>
@@ -61,7 +83,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, computed, ref, reactive } from "vue";
+import { defineComponent, computed, ref } from "vue";
 import { useStore } from "vuex";
 import NavbarHealthCenter from "../components/navbarhealthcenter.vue";
 
@@ -71,12 +93,48 @@ export default defineComponent({
     NavbarHealthCenter,
   },
   setup() {
-    const user = reactive({
+    const user = ref({
       email: "",
       password: "",
-      role: "",
+      role: "doctor",
+      healthcenter: JSON.parse(localStorage.getItem('user')).healthcenter
     });
-    return { user };
+    const errorMessage = ref("");
+    const successMessage = ref("");
+    
+    const store = useStore();
+
+    const userLoader = computed(() => store.state.user.userLoader);
+
+    const onSubmit = async (e) => {
+      e.preventDefault();
+      try {
+        await store.dispatch(
+          "user/registerUser",
+          user.value,
+          {
+            root: true,
+          }
+        );
+        // Clear login form
+        user.value.email = "";
+        user.value.password = "";
+
+        successMessage.value = "Success!"
+
+      } catch(error) {
+        errorMessage.value = error.message;
+      }
+  
+    }
+
+    return { 
+     user,
+     errorMessage,
+     successMessage,
+     userLoader,
+     onSubmit
+    };
   },
 });
 </script>

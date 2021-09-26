@@ -83,7 +83,7 @@
 
 
 <script lang="ts">
-import { defineComponent, computed, ref, onMounted } from "vue";
+import { defineComponent, computed, ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import NavbarLogin from "../components/navbarlogin.vue";
@@ -119,7 +119,7 @@ export default defineComponent({
         user.value.email = "";
         user.value.password = "";
 
-        const fetchedUser = store.state.user.user;
+        const fetchedUser = JSON.parse(localStorage.getItem('user'));
         if(fetchedUser.role === "gds_admin"){
           router.push({ name: "AdminDashboard"});
         } else if (fetchedUser.role === "admin") {
