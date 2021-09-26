@@ -43,13 +43,22 @@ const patientModule = {
       let regions = new Object();
       for (let key in state.allPatients) {
         let patient = state.allPatients[key];
-        if (patient.region in regions && patient.isDiagnosed) {
-          regions[patient.region][0] += 1;
-          if (patient.patientresult[0].doctorFinalDecision === "Glaucoma Positive") {
-            regions[patient.region][1] += 1;
+        if (patient.region in regions) {
+          console.log(patient.region);
+          if (patient.isDiagnosed) {
+            regions[patient.region][0] += 1;
+            if (patient.patientresult[0].doctorFinalDecision === "Glaucoma Positive") {
+              regions[patient.region][1] += 1;
+            }
           }
         } else {
           regions[patient.region] = [0, 0];
+          if (patient.isDiagnosed) {
+            regions[patient.region][0] += 1;
+            if (patient.patientresult[0].doctorFinalDecision === "Glaucoma Positive") {
+              regions[patient.region][1] += 1;
+            }
+          }
         }
       }
       let labels = ["Addis Ababa", "Afar", "Amhara", "Benishangul", "Dire Dawa", "Gambela", "Harari", "Oromia", "Tigray", "SNNPR"];
@@ -66,6 +75,7 @@ const patientModule = {
           chartData.glaucomatous.push(0);
         }
       }
+      console.log(chartData);
       return chartData;
     }
   },
@@ -92,10 +102,10 @@ const patientModule = {
       }
     },
 
-    fetchAllPatients: async ({ commit }) => {
+    fetchAllPatients: async ({ commit }, { query }) => {
       commit("setPatientLoader", true);
       try {
-        const response = await axios.get(`${api}/patients`);
+        const response = await axios.get(`${api}/patients/?${query}`);
         commit("setAllPatients", response.data.allpatients);
         console.log(response.data.allpatients);
       } catch(error) {
@@ -120,10 +130,10 @@ const patientModule = {
       }
     },
 
-    fetchPatientsByHealthcenter: async ({ commit }, healthcenterId) => {
+    fetchPatientsByHealthcenter: async ({ commit }, { healthcenterId, query }) => {
       commit("setPatientLoader", true);
       try {
-        const response = await axios.get(`${api}/patients/healthcenter/${healthcenterId}`);
+        const response = await axios.get(`${api}/patients/healthcenter/${healthcenterId}/?${query}`);
         commit("setPatientsByHealthcenter", response.data.patientsByhealthcenter);
         console.log(response.data.patientsByhealthcenter);
       } catch(error) {
