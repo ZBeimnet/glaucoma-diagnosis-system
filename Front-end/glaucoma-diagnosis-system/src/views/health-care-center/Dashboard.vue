@@ -98,7 +98,7 @@
                 <h2 class="title-font font-medium text-3xl text-gray-900">
                   {{ highlevelStats.glaucomatous }}
                 </h2>
-                <p class="leading-relaxed">Glaucomatous</p>
+                <p class="leading-relaxed">Glaucoma Positive</p>
               </div>
             </div>
             <div class="p-4 md:w-1/3 sm:w-1/2 w-full">
@@ -121,7 +121,7 @@
                 <h2 class="title-font font-medium text-3xl text-gray-900">
                   {{ highlevelStats.nonGlaucomatous }}
                 </h2>
-                <p class="leading-relaxed">Non-Glaucomatous</p>
+                <p class="leading-relaxed">Glaucoma Negative</p>
               </div>
             </div>
           </div>

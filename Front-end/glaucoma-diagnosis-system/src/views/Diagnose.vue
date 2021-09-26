@@ -351,7 +351,7 @@ export default {
         date: today,
         result: getResultMap(store.state.diagnose.predictionResult.tagName),
         probablity: (store.state.diagnose.predictionResult.probability * 100).toFixed(2),
-        doctorFinalDecision: "Accepted",
+        doctorFinalDecision: getResultMap(store.state.diagnose.predictionResult.tagName),
         image: image_url.value
       }
       const new_patient = JSON.parse(JSON.stringify(store.state.patient.singlePatient));
@@ -375,11 +375,17 @@ export default {
     async function decline() {
       let date = new Date();
       let today = date.toDateString();
+      let declined_result = "";
+      if (store.state.diagnose.predictionResult.tagName === "health") {
+        declined_result = "Glaucoma Positive";
+      } else {
+        declined_result = "Glaucoma Negative";
+      }
       const new_result = {
         date: today,
         result: getResultMap(store.state.diagnose.predictionResult.tagName),
         probablity: (store.state.diagnose.predictionResult.probability * 100).toFixed(2),
-        doctorFinalDecision: "Declined",
+        doctorFinalDecision: declined_result,
         image: image_url.value
       }
       const new_patient = JSON.parse(JSON.stringify(store.state.patient.singlePatient));

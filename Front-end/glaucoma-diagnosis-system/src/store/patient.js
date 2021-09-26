@@ -18,26 +18,26 @@ const patientModule = {
       if (patient.patientresult.length === 0) {
         return false;
       }
-      return patient.patientresult[0].doctorFinalDecision === "GlaucomaPositive";
+      return patient.patientresult[0].doctorFinalDecision === "Glaucoma Positive";
     }).length,
     nonGlaucomatous: (state) => state.allPatients.filter(function(patient) {
       if (patient.patientresult.length === 0) {
         return false;
       }
-      return patient.patientresult[0].doctorFinalDecision === "GlaucomaNegative";
+      return patient.patientresult[0].doctorFinalDecision === "Glaucoma Negative";
     }).length,
     hcPatientCount: (state) => state.patientsByHealthcenter.filter((patient) => patient.patientresult.length !== 0).length,
     hcGlaucomatous: (state) => state.patientsByHealthcenter.filter(function(patient) {
       if (patient.patientresult.length === 0) {
         return false;
       }
-      return patient.patientresult[0].doctorFinalDecision === "GlaucomaPositive";
+      return patient.patientresult[0].doctorFinalDecision === "Glaucoma Positive";
     }).length,
     hcNonGlaucomatous: (state) => state.patientsByHealthcenter.filter(function(patient) {
       if (patient.patientresult.length === 0) {
         return false;
       }
-      return patient.patientresult[0].doctorFinalDecision === "GlaucomaNegative";
+      return patient.patientresult[0].doctorFinalDecision === "Glaucoma Negative";
     }).length,
     adminChartData: function(state) {
       let regions = new Object();
@@ -45,7 +45,7 @@ const patientModule = {
         let patient = state.allPatients[key];
         if (patient.region in regions && patient.isDiagnosed) {
           regions[patient.region][0] += 1;
-          if (patient.patientresult[0].doctorFinalDecision === "GlaucomaPositive") {
+          if (patient.patientresult[0].doctorFinalDecision === "Glaucoma Positive") {
             regions[patient.region][1] += 1;
           }
         } else {
