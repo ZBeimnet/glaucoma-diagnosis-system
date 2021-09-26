@@ -9,7 +9,7 @@ router.post("/search",patientValidator.validation("SEARCH"),patientController.se
 router.post("/", patientValidator.validation("CREATE"),patientController.createPatient);
 router.delete("/",patientController.deletePatients);
 router.get("/:id",patientController.getPatient);
-router.put("/:id",patientValidator.validation("UPDATE"),patientController.updatePatient);
+router.put("/:id",patientController.updatePatient);
 
 
 module.exports = router;
