@@ -22,20 +22,24 @@
             class="appearance-none border rounded py-2 px-3 mx-3"
             id="age-group"
             placeholder="Age Group"
+            v-model="filter.ageGroup"
           >
-            <option>Age Group</option>
-            <option>Below 13</option>
-            <option>13 - 19</option>
-            <option>20 - 35</option>
-            <option>36 - 50</option>
-            <option>Above 50</option>
+            <option value="" disabled selected hidden>Age Group</option>
+            <option>All</option>
+            <option>0-12</option>
+            <option>13-18</option>
+            <option>19-30</option>
+            <option>31-50</option>
+            <option>>50</option>
           </select>
           <select
             class="appearance-none border rounded py-2 px-3 mx-3"
             id="gender"
             placeholder="Gender"
+            v-model="filter.gender"
           >
-            <option>Gender</option>
+            <option value="" disabled selected hidden>Gender</option>
+            <option>All</option>
             <option>Male</option>
             <option>Female</option>
           </select>
@@ -43,11 +47,15 @@
             class="appearance-none border rounded py-2 px-3 mx-3"
             id="other-criteria"
             placeholder="Other Criteria"
+            v-model="filter.screenTime"
           >
-            <option>Other Criteria</option>
-            <option>Computer User</option>
-            <option>Criterion-2</option>
-            <option>Criterion-3</option>
+            <option value="" disabled selected hidden>Average Screen Time per Day</option>
+            <option>All</option>
+            <option>0-3</option>
+            <option>4-7</option>
+            <option>8-13</option>
+            <option>8-13</option>
+            <option>>13</option>
           </select>
         </div>
       </div>
@@ -75,7 +83,7 @@
                   ></path>
                 </svg>
                 <h2 class="title-font font-medium text-3xl text-gray-900">
-                  {{ highlevelStats.patientsDiagnosed }}
+                  {{ patientsDiagnosed }}
                 </h2>
                 <p class="leading-relaxed">Patient Diagnosed</p>
               </div>
@@ -98,9 +106,9 @@
                   ></path>
                 </svg>
                 <h2 class="title-font font-medium text-3xl text-gray-900">
-                  {{ highlevelStats.glaucomatous }}
+                  {{ glaucomatous }}
                 </h2>
-                <p class="leading-relaxed">Glaucomatous</p>
+                <p class="leading-relaxed">Glaucoma Positive</p>
               </div>
             </div>
             <div class="p-4 md:w-1/3 sm:w-1/2 w-full">
@@ -121,9 +129,9 @@
                   ></path>
                 </svg>
                 <h2 class="title-font font-medium text-3xl text-gray-900">
-                  {{ highlevelStats.nonGlaucomatous }}
+                  {{ nonGlaucomatous }}
                 </h2>
-                <p class="leading-relaxed">Non-Glaucomatous</p>
+                <p class="leading-relaxed">Glaucoma Negative</p>
               </div>
             </div>
           </div>
@@ -131,7 +139,8 @@
       </section>
       
       <div class="mb-10 pt-10">
-        <div class="md:w-2/3 mx-auto">
+        <Loader class="mt-5 mx-auto" :loaderColor="loaderColor" v-if="patientLoader" />
+        <div v-else class="md:w-2/3 mx-auto">
           <div>
             <canvas id="chart"></canvas>
           </div>
@@ -142,21 +151,23 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref, onMounted } from "vue";
+import { defineComponent, computed, ref, onMounted, watch } from "vue";
 import { useStore } from "vuex";
 import { Chart, registerables } from "chart.js";
 import NavbarAdmin from "../../components/navbaradmin.vue";
+import Loader from "../../components/Loader.vue";
 
 export default defineComponent({
   name: "AdminDashboard",
   components: {
     NavbarAdmin,
+    Loader
   },
   setup() {
-    const highlevelStats = ref({
-      patientsDiagnosed: 0,
-      glaucomatous: 0,
-      nonGlaucomatous: 0,
+    const filter = ref({
+      ageGroup: "",
+      gender: "",
+      screenTime: ""
     });
     const chartData = {
       type: "bar",
@@ -165,14 +176,16 @@ export default defineComponent({
         datasets: [
           {
             label: "Total Diagnosed",
-            data: [340, 414, 231, 532, 541, 498, 677, 289, 902, 834],
+            data: [],
+            // data: [340, 414, 231, 532, 541, 498, 677, 289, 902, 834],
             backgroundColor: "rgba(71, 183,132,.5)",
             borderColor: "#47b784",
             borderWidth: 3
           },
           {
-            label: "Glaucomatous",
-            data: [20, 30, 25, 50, 79, 82, 27, 14, 90, 64],
+            label: "Glaucoma Positive",
+            data: [],
+            // data: [20, 30, 25, 50, 79, 82, 27, 14, 90, 64],
             backgroundColor: "rgba(54,73,93,.5)",
             borderColor: "#36495d",
             borderWidth: 3
@@ -190,23 +203,64 @@ export default defineComponent({
 
     const store = useStore();
 
-    onMounted(async () => {
-      await store.dispatch("patient/fetchAllPatients", { root: true });
-      highlevelStats.value.patientsDiagnosed = store.getters["patient/patientCount"];
-      highlevelStats.value.glaucomatous = store.getters["patient/glaucomatous"];
-      highlevelStats.value.nonGlaucomatous = store.getters["patient/nonGlaucomatous"];
+    const patientLoader = computed(() => store.state.patient.patientLoader);
+
+    const patientsDiagnosed = computed(() => store.getters["patient/patientCount"]);
+    const glaucomatous = computed(() => store.getters["patient/glaucomatous"]);
+    const nonGlaucomatous = computed(() => store.getters["patient/nonGlaucomatous"]);
+
+    watch(filter.value, async (currentValue) => {
+      const queries = [];
+      if (currentValue.ageGroup !== "All" && currentValue.ageGroup !== "") {
+        queries.push(`age_group=${currentValue.ageGroup}`);
+      }
+      if (currentValue.gender !== "All" && currentValue.gender !== "") {
+        queries.push(`gender=${currentValue.gender}`);
+      }
+      if (currentValue.screenTime !== "All" && currentValue.screenTime !== "") {
+        queries.push(`screentime=${currentValue.screenTime}`);
+      }
+      const finalQuery = queries.join('&');
       
-      // commenting this just to show the bar chart (we don't have diagnosed patients yet)
-      // let barChartData = store.getters["patient/adminChartData"];
-      // chartData.data.datasets[0].data = barChartData.total;
-      // chartData.data.datasets[1].data = barChartData.glaucomatous;
+      await store.dispatch(
+        "patient/fetchAllPatients", {
+          query: finalQuery 
+        },
+        { root: true }
+      );
+
+      const barChartData = store.getters["patient/adminChartData"];
+      chartData.data.datasets[0].data = barChartData.total;
+      chartData.data.datasets[1].data = barChartData.glaucomatous;
+      const ctx = document.getElementById("chart");
+      Chart.register(...registerables);
+      new Chart(ctx, chartData);
+
+    });
+
+
+    onMounted(async () => {
+      await store.dispatch("patient/fetchAllPatients", {
+          query: "" 
+        },
+        { root: true }
+      );
+      
+      const barChartData = store.getters["patient/adminChartData"];
+      chartData.data.datasets[0].data = barChartData.total;
+      chartData.data.datasets[1].data = barChartData.glaucomatous;
       const ctx = document.getElementById("chart");
       Chart.register(...registerables);
       new Chart(ctx, chartData);
     });
 
     return {
-      highlevelStats,
+      patientsDiagnosed,
+      glaucomatous,
+      nonGlaucomatous,
+      filter,
+      patientLoader,
+      loaderColor: "#2196f3",
     };
   },
 });
