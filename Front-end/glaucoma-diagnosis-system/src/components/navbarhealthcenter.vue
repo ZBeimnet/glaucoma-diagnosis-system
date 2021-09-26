@@ -25,6 +25,7 @@
               v-if="userRole === 'admin'"
               >Dashboard</router-link
             >
+            <router-link to="/user" v-if="userRole === 'admin'" class="py-4 px-2 text-gray-500 font-semibold hover:text-blue-500 transition duration-300">Register User</router-link>
 
             <router-link
               to="/reception"
@@ -54,8 +55,6 @@
               v-if="userRole === 'doctor'"
               >Patient Queue</router-link
             >
-
-          </div>
         </div>
         <!-- Secondary Navbar items -->
         <div class="hidden md:flex items-center space-x-3">

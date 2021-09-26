@@ -10,6 +10,7 @@ const localDburl = "mongodb://localhost:27017/gds";
 const mongodbAtlasUrl = "mongodb+srv://admin:admin@cluster0.8zxso.mongodb.net/GDS?retryWrites=true&w=majority";
 const patientRouter = require('./routes/patient');
 const adminRouter = require('./routes/admin');
+const userRouter = require('./routes/user');
 
 const healtchcenterRouter = require('./routes/healthcenter');
 mongoose
@@ -36,6 +37,7 @@ mongoose
 app.use("/patients",patientRouter);
 app.use("/admin",adminRouter);
 app.use("/healthcenter",healtchcenterRouter);
+app.use("/users",userRouter);
 
 app.listen(port_number,()=>{
     console.log(`GDS is listening at http://localhost:${port_number}`);
