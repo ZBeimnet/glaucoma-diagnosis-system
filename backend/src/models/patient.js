@@ -47,7 +47,7 @@ const patientSchema = new Schema({
     patientresult:[ 
         {
         date:{
-            type:Date,
+            type:String,
     
         },
         result:{
