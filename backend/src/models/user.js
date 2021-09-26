@@ -15,7 +15,7 @@ const userschema = new schema({
     },
     role:{
         type:String,
-        enum: ['admin', 'doctor','reception'],
+        enum: ['admin', 'doctor','reception','gds_admin'],
         default:'admin'
     }
 });
