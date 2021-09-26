@@ -266,7 +266,7 @@
                       <div class="flex-grow sm:pl-8">
                         <ul class="px-0">
                           <li class="border list-none rounded-sm px-3 py-3 font-medium" style='border-bottom-width:0'>Date: <span class="font-normal"> {{ result.date }} </span></li>
-                          <li class="border list-none rounded-sm px-3 py-3 font-medium" style='border-bottom-width:0'>Model Result: <span class="font-normal"> {{ result.result }} ( with {{ result.probablity }} Probability ) </span></li>
+                          <li class="border list-none rounded-sm px-3 py-3 font-medium" style='border-bottom-width:0'>Model Result: <span class="font-normal"> {{ result.result }} ( with {{ result.probablity }}% Probability ) </span></li>
                           <li class="border list-none rounded-sm px-3 py-3 font-medium" >Doctor Decision: <span class="font-normal"> {{ result.doctorFinalDecision }} </span> </li>
                         </ul>
                       </div>
