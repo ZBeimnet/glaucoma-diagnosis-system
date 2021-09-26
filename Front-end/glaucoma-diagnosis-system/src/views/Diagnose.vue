@@ -34,9 +34,7 @@
             mb-5
           "
         >
-          <router-link to="/patientQueue"
-            > Back To Patient Queue</router-link
-          >
+          <router-link to="/patientQueue"> Back To Patient Queue</router-link>
         </button>
         <div class="md:flex no-wrap md:-mx-2">
           <div
@@ -136,20 +134,20 @@
                     Diagnose
                 </button> -->
                 <div class="relative text-gray-700 w-full">
-                <form id="form" @submit.prevent="getResult">
-                  <input
-                    class="
-                      overflow-clip overflow-hidden
-                      w-full
-                      text-base
-                      placeholder-gray-600
-                      border
-                      rounded-lg
-                      focus:shadow-outline
-                    "
-                    type="file"
-                    name="file"
-                  />
+                  <form id="form" @submit.prevent="getResult">
+                    <input
+                      class="
+                        overflow-clip overflow-hidden
+                        w-full
+                        text-base
+                        placeholder-gray-600
+                        border
+                        rounded-lg
+                        focus:shadow-outline
+                      "
+                      type="file"
+                      name="file"
+                    />
                     <button
                       class="
                         absolute
@@ -171,9 +169,36 @@
                     </button>
                   </form>
                 </div>
-                <!-- <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4  ml-5 fas fa-arrow-right" @click="get_next_patient">
-                    
-                </button> -->
+                <button
+                  class="
+                    w-1/4
+                    ml-14
+                    text-center
+                    bg-indigo-600
+                    text-white
+                    hover:bg-blue-500
+                    focus:outline-none
+                  "
+                  @click="accept"
+                  v-if="Object.keys(prediction_result).length !== 0"
+                >
+                  Accept
+                </button>
+                <button
+                  class="
+                    w-1/4
+                    ml-2
+                    text-center
+                    bg-red-600
+                    text-white
+                    hover:bg-blue-500
+                    focus:outline-none
+                  "
+                  @click="decline"
+                  v-if="Object.keys(prediction_result).length !== 0"
+                >
+                  Decline
+                </button>
               </div>
             </div>
 
@@ -211,7 +236,42 @@
                 </div>
                 <!-- display patient history here -->
                 <div v-else>
-
+                  <div class="p-4" v-for="result in patient.patientresult">
+                    <div
+                      class="
+                        h-full
+                        flex
+                        sm:flex-row
+                        flex-col
+                        items-center
+                        sm:justify-start
+                        justify-center
+                        text-center
+                        sm:text-left
+                      "
+                    >
+                      <img
+                        alt="team"
+                        class="
+                          flex-shrink-0
+                          rounded-lg
+                          w-48
+                          h-48
+                          object-cover object-center
+                          sm:mb-0
+                          mb-4
+                        "
+                        :src="result.image"
+                      />
+                      <div class="flex-grow sm:pl-8">
+                        <ul class="px-0">
+                          <li class="border list-none rounded-sm px-3 py-3 font-medium" style='border-bottom-width:0'>Date: <span class="font-normal"> {{ result.date }} </span></li>
+                          <li class="border list-none rounded-sm px-3 py-3 font-medium" style='border-bottom-width:0'>Model Result: <span class="font-normal"> {{ result.result }} ( with {{ result.probablity }} Probability ) </span></li>
+                          <li class="border list-none rounded-sm px-3 py-3 font-medium" >Doctor Decision: <span class="font-normal"> {{ result.doctorFinalDecision }} </span> </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -246,13 +306,13 @@ export default {
     const image_url = computed(() => store.state.diagnose.imageUrl);
 
     const getResult = () => {
-      let form = document.getElementById('form');
+      let form = document.getElementById("form");
       let formData = new FormData(form);
       formData.append("upload_preset", "cehkc3gq");
       store.dispatch("diagnose/fetchPredictionResult", formData, {
         root: true,
       });
-    }
+    };
 
     function getColor(virdict) {
       if (virdict === "Glaucoma Positive") {
@@ -267,6 +327,7 @@ export default {
     const route = useRoute();
 
     const patient = computed(() => store.state.patient.singlePatient);
+    const resultLength = store.state.patient.singlePatient.patientresult.length;
     const patientLoading = computed(() => store.state.patient.patientLoader);
 
     onMounted(async () => {
@@ -285,6 +346,60 @@ export default {
       }
     });
 
+    async function accept() {
+      const today = new Date();
+      const new_result = {
+        date: today.toDateString(),
+        result: store.state.diagnose.predictionResult.tagName,
+        probablity: store.state.diagnose.predictionResult.probability,
+        doctorFinalDecision: "Accepted",
+        image: image_url.value
+      }
+      const new_patient = JSON.parse(JSON.stringify(store.state.patient.singlePatient));
+      new_patient.isDiagnosed = true;
+      new_patient.patientresult.unshift(new_result);
+      console.log(new_patient)
+      try {
+        await store.dispatch(
+          "patient/updatePatient",
+          new_patient,
+          {
+            root: true,
+          }
+        );
+        store.commit("diagnose/setStateDefault");
+      } catch (error) {
+        errorMessage.value = error.message;
+      }
+    }
+
+    async function decline() {
+      const today = new Date();
+      const new_result = {
+        date: today.toDateString(),
+        result: store.state.diagnose.predictionResult.tagName,
+        probablity: store.state.diagnose.predictionResult.probability,
+        doctorFinalDecision: "Declined",
+        image: image_url.value
+      }
+      const new_patient = JSON.parse(JSON.stringify(store.state.patient.singlePatient));
+      console.log(new_patient);
+      new_patient.isDiagnosed = true;
+      new_patient.patientresult.unshift(new_result);
+      try {
+        await store.dispatch(
+          "patient/updatePatient",
+          new_patient,
+          {
+            root: true,
+          }
+        );
+        store.commit("diagnose/setStateDefault");
+      } catch (error) {
+        errorMessage.value = error.message;
+      }
+    }
+
     return {
       prediction_result,
       loading,
@@ -295,6 +410,9 @@ export default {
       patient,
       patientLoading,
       errorMessage,
+      accept,
+      decline,
+      resultLength
     };
   },
 };
