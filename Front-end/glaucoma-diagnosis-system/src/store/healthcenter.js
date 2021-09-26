@@ -55,19 +55,19 @@ const healthcenterModule = {
 
     // TODO: implement this on backend
     deleteHealthcenter: async ({ commit }, healthcenterId) => {
-      commit("setActionLoader", true);
+      commit("setActionLoader", `${healthcenterId}-deny`);
       try {
         const response = await axios.delete(`${api}/healthcenter/${healthcenterId}`);
         console.log(response.data);
       } catch (error) {
         console.error(error);
       } finally {
-        commit("setActionLoader", false);
+        commit("setActionLoader", "");
       }
     },
 
     grantAccess: async ({ commit }, healthcenterId) => {
-      commit("setActionLoader", healthcenterId);
+      commit("setActionLoader", `${healthcenterId}-approve`);
       try {
         const response = await axios.put(`${api}/healthcenter/${healthcenterId}`, { isGranted: true });
         console.log(response.data);
