@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Login from '/src/views/Login.vue'
 import Register from '/src/views/Register.vue'
 import Reception from '/src/views/Reception.vue'
-import Labratory from '/src/views/Labratory.vue'
+import user from '/src/views/user.vue'
 import Diagnose from '/src/views/Diagnose.vue'
 import AdminDashboard from '/src/views/admin/Dashboard.vue'
 import HCDashboard from '/src/views/health-care-center/Dashboard.vue'
@@ -37,9 +37,9 @@ const routes = [
         component: Reception,
     },
     {
-        path: '/lab',
-        name: 'Labratory',
-        component: Labratory,
+        path: '/user',
+        name: 'user',
+        component: user,
     },
     {
         path: '/diagnose/:patientId',
