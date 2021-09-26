@@ -20,7 +20,13 @@ const patientSchema = new Schema({
         type:Number
     },
     screentime:{
-        type:Number
+        type:String
+    },
+    comp_usage:{
+        type:Number,
+    },
+    age_group:{
+        type:String
     },
     phoneno:{
         type:String
@@ -28,7 +34,7 @@ const patientSchema = new Schema({
     region:{
         type:String
     },
-    subcity:{
+    city:{
         type:String
     },
     gender:{
