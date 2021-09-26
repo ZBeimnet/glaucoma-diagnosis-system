@@ -9,12 +9,12 @@ exports.validation = (type)=>{
         body("gender").not().isEmpty().withMessage("gender is required"),
         body("phoneno").not().isEmpty().withMessage("phone no is required"),
         body("phoneno").isLength({min:10,max:10}).withMessage("phone number length must be 10"),
-        body("screentime").not().isEmpty().withMessage("screen time is required"),
+        body("comp_usage").not().isEmpty().withMessage("computer usage time is required"),
         body("age").not().isEmpty().withMessage("age is required"),
         body("age").isNumeric().withMessage("age must be number"),
         body("healthcenter").not().isEmpty().withMessage("healthcenter must login"),
         body("region").not().isEmpty().withMessage("region is required"),
-        body("subcity").not().isEmpty().withMessage("subcity is required"),
+        body("city").not().isEmpty().withMessage("subcity is required"),
 
     ];
     case"UPDATE":

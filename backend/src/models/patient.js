@@ -22,13 +22,19 @@ const patientSchema = new Schema({
     screentime:{
         type:String
     },
+    comp_usage:{
+        type:Number,
+    },
+    age_group:{
+        type:String
+    },
     phoneno:{
         type:String
     },
     region:{
         type:String
     },
-    subcity:{
+    city:{
         type:String
     },
     gender:{
