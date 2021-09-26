@@ -113,8 +113,6 @@ const patientModule = {
           throw new Error("Not Found");
         }
         console.log(response);
-        // not implemented yet
-        // await axios.put(`${api}/patients/${response.data.searchedpatient[0]._id}`, { isDiagnosed: false });
       } catch(error) {
         throw error;
       } finally {
@@ -141,6 +139,19 @@ const patientModule = {
         const response = await axios.get(`${api}/patients/${patientId}`);
         commit("setSinglePatient", response.data.Patient);
         console.log(response.data.Patient);
+      } catch(error) {
+        throw error;
+      } finally {
+        commit("setPatientLoader", false);
+      }
+    },
+
+    updatePatient: async ({ commit }, patient) => {
+      commit("setPatientLoader", true);
+      try {
+        const response = await axios.put(`${api}/patients/${patient._id}`, patient);
+        commit("setSinglePatient", response.data.updatePatient);
+        console.log(response.data.updatePatient);
       } catch(error) {
         throw error;
       } finally {

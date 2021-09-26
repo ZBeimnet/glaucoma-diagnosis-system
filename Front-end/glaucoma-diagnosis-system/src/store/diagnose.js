@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const diagnose_api =
-        "https://southcentralus.api.cognitive.microsoft.com/customvision/v3.0/Prediction/d74c4bc4-30bd-4477-ad1d-f5e30e90600d/classify/iterations/glaucoma/url";
+        "https://southcentralus.api.cognitive.microsoft.com/customvision/v3.0/Prediction/be7bc8fb-1b8c-4152-a246-f188f6bc052d/classify/iterations/Iteration1/url";
 const upload_api = "https://api.cloudinary.com/v1_1/dimhrk8pt/image/upload";
 
 const diagnoseModule = {
@@ -15,7 +15,12 @@ const diagnoseModule = {
   mutations: {
     setPredictionResult: (state, payload) => state.predictionResult = payload,
     setPredictionLoader: (state, payload) => state.predictionLoader = payload,
-    setImageUrl: (state, payload) => state.imageUrl = payload
+    setImageUrl: (state, payload) => state.imageUrl = payload,
+    setStateDefault: (state) => {
+      state.predictionResult = {};
+      state.predictionLoader = false;
+      state.imageUrl = "";
+    }
   },
   
   actions: {
@@ -23,7 +28,7 @@ const diagnoseModule = {
       commit("setPredictionLoader", true);
       const headers = {
         "Content-Type": "application/json",
-        "Prediction-Key": "4d317fce897d495ea95ea0f104e37c1f",
+        "Prediction-Key": "8fc6a0a8d5a441548884b09f94707f35",
       };
       try {
         await dispatch("uploadImage", formData);
