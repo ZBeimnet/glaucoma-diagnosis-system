@@ -138,8 +138,10 @@ exports.deleteHealthcenterById = async(req,res,next)=>{
             
             else{
                 sendEmail.isDenied(deletedHealthcenter);
+                const deleteusers = await user.remove({healthcenter:req.params.id});
                 res.status(200).json({
                     status:"success",
+                    deleteusers,
                     deletedHealthcenter
                 });
             }
