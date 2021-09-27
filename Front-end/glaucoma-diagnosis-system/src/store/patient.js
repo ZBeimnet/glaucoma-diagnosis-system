@@ -96,6 +96,7 @@ const patientModule = {
         const response = await axios.post(`${api}/patients`, patient)
         console.log(response);
       } catch(error) {
+        console.log(error.message);
         throw error;
       } finally {
         commit("setRegisterLoader", false);

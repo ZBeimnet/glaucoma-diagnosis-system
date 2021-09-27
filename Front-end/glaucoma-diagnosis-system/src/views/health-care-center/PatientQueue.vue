@@ -239,7 +239,7 @@ export default defineComponent({
     onMounted(async () => {
       // get healthcenter_id from the logged user
       try{
-        await store.dispatch("patient/fetchPatientsByHealthcenter", "612cc8a77715aecd82c2ada1", {
+        await store.dispatch("patient/fetchPatientsByHealthcenter", {healthcenterId: "612cc8a77715aecd82c2ada1", query: ""}, {
           root: true,
         });
         console.log(patients);

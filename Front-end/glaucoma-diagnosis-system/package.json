@@ -9,9 +9,11 @@
   "dependencies": {
     "axios": "^0.21.1",
     "chart.js": "^3.5.0",
+    "vee-validate": "^4.4.11",
     "vue": "^3.0.5",
     "vue-router": "^4.0.10",
-    "vuex": "^4.0.2"
+    "vuex": "^4.0.2",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.2.5",
