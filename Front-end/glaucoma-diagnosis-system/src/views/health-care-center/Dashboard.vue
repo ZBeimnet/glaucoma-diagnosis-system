@@ -53,7 +53,6 @@
             <option>0-3</option>
             <option>4-7</option>
             <option>8-13</option>
-            <option>8-13</option>
             <option>>13</option>
           </select>
         </div>
