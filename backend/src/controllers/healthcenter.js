@@ -164,6 +164,9 @@ exports.updateHealthcenter = async(req,res,next)=>{
         if(updatehealthcenter.isGranted){
             sendEmail.isGranted(updatehealthcenter);
         }
+        else{
+            sendEmail.isRejected(updatehealthcenter);
+        }
         res.status(200).json({
             status:"successfuly updated",
             updatehealthcenter
