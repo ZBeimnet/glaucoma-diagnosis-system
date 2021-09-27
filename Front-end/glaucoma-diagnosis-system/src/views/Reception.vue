@@ -57,7 +57,7 @@
             Loading..
           </h2>
           <!-- confirmation -->
-          <h2 class="title-font text-center mt-5 text-green-700" v-if="!patientLoader"> 
+          <h2 class="title-font text-center mt-5" v-if="!patientLoader" :class="getColor(searchResult)"> 
             {{ searchResult }}
           </h2>
         </div>
@@ -97,10 +97,12 @@
                       text-grey-darker
                     "
                     id="first_name"
+                    name="firstname"
                     type="text"
                     placeholder="First name"
-                    v-model="patient.firstname"
+                    v-model="firstname"
                   />
+                  <span class="title-font text-center text-red-700">{{ firstnameError }}</span>
                 </div>
                 <div class="w-1/2 ml-1">
                   <label
@@ -119,10 +121,12 @@
                       text-grey-darker
                     "
                     id="last_name"
+                    name="lastname"
                     type="text"
                     placeholder="Last name"
-                    v-model="patient.lastname"
+                    v-model="lastname"
                   />
+                  <span class="title-font text-center text-red-700">{{ lastnameError }}</span>
                 </div>
               </div>
               <div class="flex mb-4">
@@ -143,10 +147,12 @@
                       text-grey-darker
                     "
                     id="age"
+                    name="age"
                     type="text"
                     placeholder="Age"
-                    v-model="patient.age"
+                    v-model="age"
                   />
+                  <span class="title-font text-center text-red-700">{{ ageError }}</span>
                 </div>
                 <div class="w-1/2 ml-1">
                   <label
@@ -165,10 +171,12 @@
                       text-grey-darker
                     "
                     id="screen_time"
+                    name="screentime"
                     type="text"
                     placeholder="Average screen time per day"
-                    v-model="patient.screentime"
+                    v-model="screentime"
                   />
+                  <span class="title-font text-center text-red-700">{{ screentimeError }}</span>
                 </div>
               </div>
               <div class="flex mb-4">
@@ -189,24 +197,22 @@
                       text-grey-darker
                     "
                     id="region"
+                    name="region"
                     placeholder="Addis Ababa"
-                    v-model="patient.region"
+                    v-model="region"
                   >
-                    <option>Addis Abaa</option>
+                    <option selected>Addis Ababa</option>
                     <option>Afar</option>
                     <option>Amhara</option>
-                    <option>Benishangul-Gumuz</option>
+                    <option>Benishangul</option>
                     <option>Dire Dawa</option>
                     <option>Gambela</option>
                     <option>Harari</option>
                     <option>Oromia</option>
-                    <option>Sidama</option>
-                    <option>Somali</option>
-                    <option>
-                      Southern Nation and Nationalities and People
-                    </option>
                     <option>Tigray</option>
+                    <option>SNNPR</option>
                   </select>
+                  <span class="title-font text-center text-red-700">{{ regionError }}</span>
                 </div>
                 <div class="w-1/2 mr-1">
                   <label
@@ -219,7 +225,7 @@
                       mb-2
                     "
                     for="sub_city"
-                    >Sub City</label
+                    >City</label
                   >
                   <select
                     class="
@@ -232,24 +238,22 @@
                       text-grey-darker
                     "
                     id="sub_city"
+                    name="subcity"
                     placeholder=""
-                    v-model="patient.subcity"
+                    v-model="subcity"
                   >
-                    <option>Addis Abaa</option>
+                    <option selected>Addis Ababa</option>
                     <option>Afar</option>
                     <option>Amhara</option>
-                    <option>Benishangul-Gumuz</option>
+                    <option>Benishangul</option>
                     <option>Dire Dawa</option>
                     <option>Gambela</option>
                     <option>Harari</option>
                     <option>Oromia</option>
-                    <option>Sidama</option>
-                    <option>Somali</option>
-                    <option>
-                      Southern Nation and Nationalities and People
-                    </option>
                     <option>Tigray</option>
+                    <option>SNNPR</option>
                   </select>
+                  <span class="title-font text-center text-red-700">{{ subcityError }}</span>
                 </div>
               </div>
               <div class="flex mb-4">
@@ -270,10 +274,12 @@
                       text-grey-darker
                     "
                     id="phone_number"
+                    name="phoneno"
                     type="text"
                     placeholder="Phone Number"
-                    v-model="patient.phoneno"
+                    v-model="phoneno"
                   />
+                  <span class="title-font text-center text-red-700">{{ phonenoError }}</span>
                 </div>
                 <div class="w-1/2 mr-1">
                   <label
@@ -292,12 +298,14 @@
                       text-grey-darker
                     "
                     id="gender"
+                    name="gender"
                     placeholder=""
-                    v-model="patient.gender"
+                    v-model="gender"
                   >
-                    <option>Male</option>
+                    <option selected>Male</option>
                     <option>Female</option>
                   </select>
+                  <span class="title-font text-center text-red-700">{{ genderError }}</span>
                 </div>
               </div>
 
@@ -313,6 +321,7 @@
                     border border-blue-700
                   "
                   @click="registerPatient"
+                  :disabled="!isValid"
                 >
                   Register
                 </button>
@@ -320,7 +329,7 @@
                 <span class="text-blue-700 ml-10" v-if="registerLoader">
                   Loading...
                 </span>
-                <span class="text-green-700 ml-10" v-if="!registerLoader">
+                <span class="ml-10" v-if="!registerLoader" :class="getColor2(registerResult)">
                   {{ registerResult }}
                 </span>
               </div>
@@ -338,6 +347,8 @@
 <script lang="ts">
 import { defineComponent, computed, ref } from "vue";
 import { useStore } from "vuex";
+import { useForm, useField, useIsFormValid, useIsFieldDirty } from 'vee-validate';
+import * as yup from 'yup';
 import NavbarHealthCenter from "../components/navbarhealthcenter.vue";
 
 export default defineComponent({
@@ -346,16 +357,32 @@ export default defineComponent({
     NavbarHealthCenter,
   },
   setup() {
-    const patient = ref({
-      firstname: "",
-      lastname: "",
-      age: "",
-      region: "",
-      subcity: "",
-      gender: "",
-      phoneno: "",
-      screentime: "",
+    const schema = yup.object({
+      firstname: yup.string().required().min(3),
+      lastname: yup.string().required().min(3),
+      age: yup.string().required(),
+      region: yup.string().required(),
+      gender: yup.string().required(),
+      subcity: yup.string().required(),
+      phoneno: yup.string().required().min(10).max(10),
+      screentime: yup.string().required()
     });
+    // Create a form context with the validation schema
+    useForm({
+      validationSchema: schema,
+    });
+
+    const { value: firstname, errorMessage: firstnameError } = useField('firstname');
+    const { value: lastname, errorMessage: lastnameError } = useField('lastname');
+    const { value: age, errorMessage: ageError } = useField('age');
+    const { value: region, errorMessage: regionError } = useField('region');
+    const { value: gender, errorMessage: genderError } = useField('gender');
+    const { value: subcity, errorMessage: subcityError } = useField('subcity');
+    const { value: phoneno, errorMessage: phonenoError } = useField('phoneno');
+    const { value: screentime, errorMessage: screentimeError } = useField('screentime');
+    
+    const isValid = computed(() => useIsFormValid().value && !useIsFieldDirty().value);
+
     const cardNumber = ref("");
     const searchResult = ref("");
     const registerResult = ref("");
@@ -367,24 +394,33 @@ export default defineComponent({
 
     const registerPatient = async function() {
       try {
+        const patient = {
+          firstname: firstname.value,
+          lastname: lastname.value,
+          age: age.value,
+          region: region.value,
+          city: subcity.value,
+          gender: gender.value,
+          phoneno: phoneno.value,
+          comp_usage: screentime.value,
+          healthcenter: "612cc8a77715aecd82c2ada1"
+        }
+        console.log(patient);
         // get healthcenter_id from the logged user
-        patient.value = {...patient.value, healthcenter: "612cc8a77715aecd82c2ada1"};
-        await store.dispatch("patient/registerPatient", patient.value, {
+        await store.dispatch("patient/registerPatient", 
+        patient
+        , 
+        {
           root: true,
         });
         registerResult.value = "Success";
+        
+        // CHECK IF A RELATION B/N PATIENT AND HC HAS BEEN CREATED
+        
       } catch(error) {
         registerResult.value = "Error";
       }
-      // clear form
-      patient.value.firstname = "";
-      patient.value.lastname = "";
-      patient.value.age = "";
-      patient.value.region = "";
-      patient.value.subcity = "";
-      patient.value.gender = "";
-      patient.value.phoneno = "";
-      patient.value.screentime = "";
+      
     };
 
     const addToQueue = async function() {
@@ -402,16 +438,48 @@ export default defineComponent({
       }
     };
 
+    function getColor(result) {
+      if (result === "Patient Not Found") {
+        return "text-red-600";
+      }
+      return "text-green-600";
+    }
+
+    function getColor2(result) {
+      if (result === "Error") {
+        return "text-red-600";
+      }
+      return "text-green-600";
+    }
+
     return {
-      patient,
       registerResult,
       registerLoader,
       registerPatient,
       addToQueue,
       cardNumber,
       searchResult,
-      patientLoader
+      patientLoader,
+      getColor,
+      firstname,
+      lastname,
+      age,
+      region,
+      gender,
+      subcity,
+      phoneno,
+      screentime,
+      firstnameError,
+      lastnameError,
+      ageError,
+      regionError,
+      genderError,
+      subcityError,
+      phonenoError,
+      screentimeError,
+      isValid,
+      getColor2
     };
-  },
+  }
 });
 </script>

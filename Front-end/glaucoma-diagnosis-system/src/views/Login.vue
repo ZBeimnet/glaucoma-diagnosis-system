@@ -24,17 +24,19 @@
                 type="text"
                 class="block border border-grey-light w-full p-3 rounded mb-4"
                 name="email"
-                v-model="user.email"
+                v-model="email"
                 placeholder="Email"
               />
+              <span class="title-font text-center text-red-700">{{ emailError }}</span>
 
               <input
                 type="password"
                 class="block border border-grey-light w-full p-3 rounded mb-4"
                 name="password"
-                v-model="user.password"
+                v-model="password"
                 placeholder="Password"
               />
+              <span class="title-font text-center text-red-700">{{ passwordError }}</span>
 
               <div class="flex items-center justify-center mb-5">
                 <button
@@ -52,6 +54,7 @@
                     duration-300
                     my-3
                   "
+                  :disabled="!isValid"
                   type="submit"
                 >
                   Login
@@ -86,6 +89,8 @@
 import { defineComponent, computed, ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+import { useForm, useField, useIsFormValid, useIsFieldDirty } from 'vee-validate';
+import * as yup from 'yup';
 import NavbarLogin from "../components/navbarlogin.vue";
 
 export default defineComponent({
@@ -94,10 +99,23 @@ export default defineComponent({
     NavbarLogin,
   },
   setup() {
-    const user = ref({
-      email:'',
-      password:''
+    // Validation
+    // Define a validation schema
+    const schema = yup.object({
+      email: yup.string().required().email(),
+      password: yup.string().required().min(4),
     });
+    // Create a form context with the validation schema
+    useForm({
+      validationSchema: schema,
+    });
+
+    // No need to define rules for fields
+    const { value: email, errorMessage: emailError } = useField('email');
+    const { value: password, errorMessage: passwordError } = useField('password');
+
+    const isValid = computed(() => useIsFormValid().value && !useIsFieldDirty().value);
+    
     const errorMessage = ref("");
     
     const store = useStore();
@@ -110,14 +128,14 @@ export default defineComponent({
       try {
         await store.dispatch(
           "user/login",
-          user.value,
+          {
+            email: email.value,
+            password: password.value
+          },
           {
             root: true,
           }
         );
-        // Clear login form
-        user.value.email = "";
-        user.value.password = "";
 
         const fetchedUser = JSON.parse(localStorage.getItem('user'));
         if(fetchedUser.role === "gds_admin"){
@@ -136,13 +154,19 @@ export default defineComponent({
     }
 
     return { 
-      user,
       onSubmit,
       userLoader,
-      errorMessage
+      errorMessage,
+      emailError,
+      passwordError,
+      email,
+      password,
+      isValid
     };
   },
 });
 </script>
-<style>
+
+<style scoped>
+
 </style>
