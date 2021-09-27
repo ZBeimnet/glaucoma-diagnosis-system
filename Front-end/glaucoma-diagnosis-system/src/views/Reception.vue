@@ -392,6 +392,8 @@ export default defineComponent({
     const registerLoader = computed(() => store.state.patient.registerLoader);
     const patientLoader = computed(() => store.state.patient.patientLoader);
 
+    const loggedUser = JSON.parse(localStorage.getItem('user'));
+
     const registerPatient = async function() {
       try {
         const patient = {
@@ -403,7 +405,7 @@ export default defineComponent({
           gender: gender.value,
           phoneno: phoneno.value,
           comp_usage: screentime.value,
-          healthcenter: "612cc8a77715aecd82c2ada1"
+          healthcenter: loggedUser.healthcenter
         }
         console.log(patient);
         // get healthcenter_id from the logged user
@@ -427,7 +429,7 @@ export default defineComponent({
       // get healthcenter_id from the logged user
       // for now, using healthcenter_id for blacklion
       const patientInfo = {
-        healthcenter: "612cc8a77715aecd82c2ada1",
+        healthcenter: loggedUser.healthcenter,
         cardNumber: cardNumber.value
       };
       try {

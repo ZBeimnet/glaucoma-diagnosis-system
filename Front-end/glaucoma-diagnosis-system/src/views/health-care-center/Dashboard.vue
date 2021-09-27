@@ -195,6 +195,8 @@ export default defineComponent({
     const patientsDiagnosed = computed(() => store.getters["patient/hcPatientCount"]);
     const glaucomatous = computed(() => store.getters["patient/hcGlaucomatous"]);
     const nonGlaucomatous = computed(() => store.getters["patient/hcNonGlaucomatous"]);
+    
+    const loggedUser = JSON.parse(localStorage.getItem('user'));
 
     watch(filter.value, async (currentValue) => {
       const queries = [];
@@ -211,7 +213,7 @@ export default defineComponent({
       
       await store.dispatch(
         "patient/fetchPatientsByHealthcenter", {
-          healthcenterId: "612cc8a77715aecd82c2ada1",
+          healthcenterId: loggedUser.healthcenter,
           query: finalQuery 
         },
         { root: true }
@@ -229,7 +231,7 @@ export default defineComponent({
       // get healthcenter_id from the logged user
       await store.dispatch(
         "patient/fetchPatientsByHealthcenter",{
-          healthcenterId: "612cc8a77715aecd82c2ada1",
+          healthcenterId: loggedUser.healthcenter,
           query: "" 
         },
         { root: true }

@@ -236,10 +236,12 @@ export default defineComponent({
     const patientLoading = computed(() => store.state.patient.patientLoader);
     const patients = computed(() => store.state.patient.patientsByHealthcenter);
 
+    const loggedUser = JSON.parse(localStorage.getItem('user'));
+
     onMounted(async () => {
       // get healthcenter_id from the logged user
       try{
-        await store.dispatch("patient/fetchPatientsByHealthcenter", {healthcenterId: "612cc8a77715aecd82c2ada1", query: ""}, {
+        await store.dispatch("patient/fetchPatientsByHealthcenter", {healthcenterId: loggedUser.healthcenter, query: "isDiagnosed=false"}, {
           root: true,
         });
         console.log(patients);
