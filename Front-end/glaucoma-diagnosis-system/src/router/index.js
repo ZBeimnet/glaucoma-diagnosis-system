@@ -62,5 +62,17 @@ const router = createRouter({
     history: createWebHistory(),
     routes,
     linkActiveClass: 'is-active'
-})
+});
+
+router.beforeEach((to, from, next) => {
+    const isLoggedIn = JSON.parse(localStorage.getItem('user')) || {};
+    if (to.name === 'Register') {
+        next()
+    } else if (to.name !== 'Login'  && Object.keys(isLoggedIn).length === 0) {
+        next({ name: 'Login' })
+    }
+    else {
+        next()
+    } 
+});
 export default router
