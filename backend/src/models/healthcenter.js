@@ -25,15 +25,7 @@ const helathcenterSchema = new schema({
         type:Boolean,
         default:false
     },
-    status: {
-        type: String, 
-        enum: ['Pending', 'Active'],
-        default: 'Pending'
-      },
-      confirmationCode: { 
-        type: String, 
-        unique: true 
-    },
+    
 });
 
 const healthcenter = mongoose.model("healthcenter",helathcenterSchema);

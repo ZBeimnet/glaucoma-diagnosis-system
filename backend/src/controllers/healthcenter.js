@@ -50,7 +50,7 @@ exports.createHealthcenter = async (req,res,next)=>{
             const resp = new healthcenter(req.body);
             const salt = await bcrypt.genSalt(10);
             resp.password = await bcrypt.hash(resp.password,salt);
-            resp.confirmationCode= resp._id;
+           
            
             const newhealthcenter  = await resp.save();
             let newuser = new user(req.body);
@@ -60,7 +60,7 @@ exports.createHealthcenter = async (req,res,next)=>{
 
             const newusers = await newuser.save();
 
-            sendEmail.sendconfirmationEmail(newhealthcenter);
+            
         res.status(201).json({
             status:"success",
             newusers,
@@ -79,11 +79,7 @@ exports.login = async (req,res,next)=>{
     try{
         const healthcent = await healthcenter.findOne({email:req.body.email});
         if(healthcent){
-        if(healthcent.status!='Active'){
-            return res.status(401).send({
-                message: "Pending Account. Please Verify Your Email!",
-              });
-        }
+        
         if(!healthcent.isGranted){
             return res.status(401).send({
                 message: "Pending account.You are not granted",
@@ -139,8 +135,9 @@ exports.deleteHealthcenterById = async(req,res,next)=>{
                     message: "The health center not found",
                   });
             }
-
+            
             else{
+                sendEmail.isDenied(deletedHealthcenter);
                 res.status(200).json({
                     status:"success",
                     deletedHealthcenter
@@ -176,25 +173,3 @@ exports.updateHealthcenter = async(req,res,next)=>{
     }
 }
 
-exports.verifyHealthcenter=async (req,res,next)=>{
-    try{
-
-    
-    const hc = await healthcenter.findOne({confirmationCode:req.params.confirmationCode});
-    if(!hc){
-        return res.status(404).json({ message: "Healthcenter Not found. invalid confimration code" });
-
-    }
-    hc.status = 'Active';
-    const resp = await hc.save();
-    res.status(200).json({
-        message:"email confirmation successfull",
-        resp
-    })
-}
-catch(err){
-    console.log(err);
-}
-
-    
-}
