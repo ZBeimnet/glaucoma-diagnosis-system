@@ -14,7 +14,7 @@ router.post("/login",healthcenterValidator.validation("LOGIN"),healthcenterContr
 router.delete("/",healthcenterController.deleteHealthcenter);
 router.put("/:id",healthcenterController.updateHealthcenter);
 router.delete("/:id",healthcenterController.deleteHealthcenterById);
-router.get("/confirm/:confirmationCode",healthcenterController.verifyHealthcenter);
+
 
 
 
