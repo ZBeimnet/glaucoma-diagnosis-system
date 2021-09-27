@@ -242,16 +242,16 @@
                     placeholder=""
                     v-model="subcity"
                   >
-                    <option selected>Addis Ababa</option>
-                    <option>Afar</option>
-                    <option>Amhara</option>
-                    <option>Benishangul</option>
+                    <option>Addis Ababa</option>
+                    <option>Adama</option>
+                    <option>Bahir Dar</option>
+                    <option>Hawasa</option>
                     <option>Dire Dawa</option>
                     <option>Gambela</option>
-                    <option>Harari</option>
-                    <option>Oromia</option>
-                    <option>Tigray</option>
-                    <option>SNNPR</option>
+                    <option>Harara</option>
+                    <option>Argoba</option>
+                    <option>Mekele</option>
+                    <option>Jijiga</option>
                   </select>
                   <span class="title-font text-center text-red-700">{{ subcityError }}</span>
                 </div>
@@ -347,7 +347,7 @@
 <script lang="ts">
 import { defineComponent, computed, ref } from "vue";
 import { useStore } from "vuex";
-import { useForm, useField, useIsFormValid, useIsFieldDirty } from 'vee-validate';
+import { useForm, useField, useIsFormValid, useIsFieldDirty, useResetForm } from 'vee-validate';
 import * as yup from 'yup';
 import NavbarHealthCenter from "../components/navbarhealthcenter.vue";
 
@@ -382,6 +382,7 @@ export default defineComponent({
     const { value: screentime, errorMessage: screentimeError } = useField('screentime');
     
     const isValid = computed(() => useIsFormValid().value && !useIsFieldDirty().value);
+    const resetForm = useResetForm();
 
     const cardNumber = ref("");
     const searchResult = ref("");
@@ -416,8 +417,7 @@ export default defineComponent({
           root: true,
         });
         registerResult.value = "Success";
-        
-        // CHECK IF A RELATION B/N PATIENT AND HC HAS BEEN CREATED
+        resetForm();
         
       } catch(error) {
         registerResult.value = "Error";
