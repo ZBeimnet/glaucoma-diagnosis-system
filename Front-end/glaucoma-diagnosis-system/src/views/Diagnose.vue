@@ -376,7 +376,7 @@ export default {
       let date = new Date();
       let today = date.toDateString();
       let declined_result = "";
-      if (store.state.diagnose.predictionResult.tagName === "health") {
+      if (store.state.diagnose.predictionResult.tagName === "healthy") {
         declined_result = "Glaucoma Positive";
       } else {
         declined_result = "Glaucoma Negative";

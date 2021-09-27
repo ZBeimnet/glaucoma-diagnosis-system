@@ -30,10 +30,10 @@ const healthcenterModule = {
       commit("setRegisterLoader", true);
       try {
         const response = await axios.post(`${api}/healthcenter`, healthcenter);
-        commit("setRegisterResult", "Success");
+        commit("setRegisterResult", "Success!");
         console.log(response);
       } catch(error) {
-        commit("setRegisterResult", "Error");
+        commit("setRegisterResult", "Email Already Exists!");
         console.error(response.status);
       } finally {
         commit("setRegisterLoader", false);

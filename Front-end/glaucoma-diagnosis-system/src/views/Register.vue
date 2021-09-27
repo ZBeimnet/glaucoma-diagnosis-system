@@ -240,10 +240,10 @@ export default defineComponent({
     };
 
     function getColor(result) {
-      if (result === "Error") {
-        return "text-red-600";
+      if (result === "Success!") {
+        return "text-green-600";
       }
-      return "text-green-600";
+      return "text-red-600";
     }
 
     return { 
