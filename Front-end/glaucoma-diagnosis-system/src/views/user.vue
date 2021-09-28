@@ -16,17 +16,18 @@
                 type="text"
                 class="block border border-grey-light w-full p-3 rounded mb-4"
                 name="email"
-                v-model="user.email"
+                v-model="email"
                 placeholder="Email"
               />
-
+              <span class="title-font text-center text-red-700">{{ emailError }}</span>
               <input
                 type="password"
                 class="block border border-grey-light w-full p-3 rounded mb-4"
                 name="password"
-                v-model="user.password"
+                v-model="password"
                 placeholder="Password"
               />
+              <span class="title-font text-center text-red-700">{{ passwordError }}</span>
                  <div class="text-gray-700 md:flex md:items-center">
                   <div class="mb-1 md:mb-0 md:w-1/5">
               <label class="text-left" style="max-width: 300px;">
@@ -35,17 +36,19 @@
                 </div>  
                
                 <div class="md:w-2/3 md:flex-grow">
-                <select v-model="user.role" class="w-full h-10 pl-3 pr-6 text-base placeholder-gray-600 
+                <select v-model="role" class="w-full h-10 pl-3 pr-6 text-base placeholder-gray-600 
                 border border-grey-light rounded-lg appearance-none focus:shadow-outline">
                   <option>reception</option>
                   <option>doctor</option>
                 </select>
+                <span class="title-font text-center text-red-700">{{ roleError }}</span>
                 </div>
               </div>
              
 
               <div class="flex items-center justify-center mb-5">
                 <button
+                :disabled="!isValid"
                   @click="onSubmit"
                   class="w-1/4 ml-10 text-center py-3  bg-indigo-600 text-white hover:bg-blue-500 focus:outline-none ransition duration-300 my-3"
                   type="submit"
@@ -60,7 +63,7 @@
                   </h2>
                 </div>
                 <div
-                  v-if="successMessage && !userLoader"
+                  v-if="successMessage && !userLoader && !errorMessage"
                 >
                   <h2 class="title-font text-center ml-5 text-green-700">
                     {{ successMessage }}
@@ -85,6 +88,8 @@
 <script lang="ts">
 import { defineComponent, computed, ref } from "vue";
 import { useStore } from "vuex";
+import { useForm, useField, useIsFormValid, useIsFieldDirty, useResetForm } from 'vee-validate';
+import * as yup from 'yup';
 import NavbarHealthCenter from "../components/navbarhealthcenter.vue";
 
 export default defineComponent({
@@ -93,12 +98,23 @@ export default defineComponent({
     NavbarHealthCenter,
   },
   setup() {
-    const user = ref({
-      email: "",
-      password: "",
-      role: "doctor",
-      healthcenter: JSON.parse(localStorage.getItem('user')).healthcenter
+    const schema = yup.object({
+      email: yup.string().required().email(),
+      password: yup.string().required().min(4),
+      role: yup.string().required()
     });
+
+    useForm({
+      validationSchema: schema,
+    });
+
+    const { value: email, errorMessage: emailError } = useField('email');
+    const { value: password, errorMessage: passwordError } = useField('password');
+    const { value: role, errorMessage: roleError } = useField('role');
+
+    const isValid = computed(() => useIsFormValid().value && !useIsFieldDirty().value);
+    const resetForm = useResetForm();
+
     const errorMessage = ref("");
     const successMessage = ref("");
     
@@ -111,16 +127,20 @@ export default defineComponent({
       try {
         await store.dispatch(
           "user/registerUser",
-          user.value,
+          {
+            email: email.value,
+            password: password.value,
+            role: role.value,
+            healthcenter: JSON.parse(localStorage.getItem('user')).healthcenter
+          },
           {
             root: true,
           }
         );
         // Clear login form
-        user.value.email = "";
-        user.value.password = "";
+        resetForm();
 
-        successMessage.value = "Success!"
+        successMessage.value = "Success!";
 
       } catch(error) {
         errorMessage.value = error.message;
@@ -129,11 +149,17 @@ export default defineComponent({
     }
 
     return { 
-     user,
      errorMessage,
      successMessage,
      userLoader,
-     onSubmit
+     onSubmit,
+     emailError,
+      passwordError,
+      roleError,
+      role,
+      email,
+      password,
+      isValid
     };
   },
 });
